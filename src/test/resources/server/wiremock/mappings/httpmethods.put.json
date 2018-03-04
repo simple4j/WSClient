@@ -1,0 +1,14 @@
+{
+    "request": {
+        "method": "PUT",
+        "urlPattern": "/simple4j/wsmock/httpmethods/put/.*"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"responsevalue\":\"{{request.body}}\", \"reqheadr2\":\"{{request.headers.x-header2}}\"}",
+        "headers": {
+            "Content-Type": "application/JSON"
+        },
+        "transformers": ["response-template"]
+    }
+}

@@ -15,5 +15,6 @@
 	</root>
 
 	<logger name="org.simple4j.wsclient" level="ALL" />
+	<logger name="org.apache.http.wire" level="ALL"></logger>
 
 </configuration>

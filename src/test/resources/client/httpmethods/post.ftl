@@ -1,0 +1,1 @@
+"bodyparam1":"bp1${testProperty2}"
