@@ -1,0 +1,14 @@
+{
+    "request": {
+        "method": "POST",
+        "urlPattern": "/simple4j/wsmock/requestobjecttype/complex/.*"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"responsevalue\":\"rv{{request.headers.x-header1}}\"}",
+        "headers": {
+            "Content-Type": "application/JSON"
+        },
+        "transformers": ["response-template"]
+    }
+}

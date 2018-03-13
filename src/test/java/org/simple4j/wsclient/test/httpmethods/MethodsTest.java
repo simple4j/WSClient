@@ -33,6 +33,8 @@ public class MethodsTest
 
 	private static Caller putCaller = null;
 
+	private static Caller deleteCaller = null;
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
 	{
@@ -49,6 +51,7 @@ public class MethodsTest
 		getCaller = context.getBean("getCaller", Caller.class);
 		postCaller = context.getBean("postCaller", Caller.class);
 		putCaller = context.getBean("putCaller", Caller.class);
+		deleteCaller = context.getBean("deleteCaller", Caller.class);
 	}
 
 	@AfterClass
@@ -111,6 +114,21 @@ public class MethodsTest
 		logger.info(responsevalue);
 		// HTTP_RESPONSE_OBJECT
 		assertEquals("Put call response does not match", reqObj.get("testProperty2"), responsevalue);
+	}
+
+	@Test
+	public void testdelete()
+	{
+		logger.info("inside testdelete");
+		HashMap<String, String> reqObj = new HashMap<String, String>();
+		reqObj.put("testProperty1", "" + System.currentTimeMillis());
+		reqObj.put("testProperty2", "param2");
+		Map<String, Object> response = deleteCaller.serviceCall(reqObj);
+		logger.info("response from call", response);
+		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
+		logger.info(responsevalue);
+		// HTTP_RESPONSE_OBJECT
+		assertEquals("Delete call response does not match", reqObj.get("testProperty1"), responsevalue);
 	}
 
 }

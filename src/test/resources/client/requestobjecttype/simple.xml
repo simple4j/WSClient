@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -9,14 +10,14 @@
                         http://www.springframework.org/schema/util
 						http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
-	<bean id="putCaller" class="org.simple4j.wsclient.caller.Caller">
+	<bean id="simpleCaller" class="org.simple4j.wsclient.caller.Caller">
 		<property name="httpWSClient" ref="httpWSClient"></property>
-		<property name="serviceMethod" value="PUT"></property>
-		<property name="requestURLFormatter" ref="putRequestURLFormatter"></property>
+		<property name="serviceMethod" value="POST"></property>
+		<property name="requestURLFormatter" ref="simpleRequestURLFormatter"></property>
 		<property name="requestHeaderFormatters">
 			<map>
-				<entry key="x-header1" value-ref="putRequestHeader1Formatter"></entry>
-				<entry key="x-header2" value-ref="putRequestHeader2Formatter"></entry>
+				<entry key="x-header1" value-ref="simpleRequestHeader1Formatter"></entry>
+				<entry key="x-header2" value-ref="simpleRequestHeader2Formatter"></entry>
 			</map>
 		</property>
 		<property name="staticHeaderValues">
@@ -28,7 +29,7 @@
 				</entry>
 			</map>
 		</property>
-		<property name="requestBodyFormatter" ref="putRequestBodyFormatter"></property>
+		<property name="requestBodyFormatter" ref="simpleRequestBodyFormatter"></property>
 		<property name="responseBodyParsers">
 			<map>
 				<entry key="(200)|(204)" value-ref="successBodyParser"></entry>
@@ -38,30 +39,29 @@
 		<!-- <property name="responseBodyToObjectMapping" ref=""></property> -->
 	</bean>
 
-	<bean id="putRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern"
-			value="/simple4j/wsmock/httpmethods/put/~!URLPROP1!~"></property>
+	<bean id="simpleRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
+		<property name="pattern" value="/simple4j/wsmock/requestobjecttype/simple/~!URLPROP1!~"></property>
 		<property name="mapping">
 			<map>
-				<entry key="URLPROP1" value="testProperty1" />
+				<entry key="URLPROP1" value="productId" />
 			</map>
 		</property>
 	</bean>
 
-	<bean id="putRequestHeader1Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
+	<bean id="simpleRequestHeader1Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
 		<property name="pattern" value="h1~!HPROP1!~"></property>
 		<property name="mapping">
 			<map>
-				<entry key="HPROP1" value="testProperty1" />
+				<entry key="HPROP1" value="productId" />
 			</map>
 		</property>
 	</bean>
 
-	<bean id="putRequestHeader2Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
+	<bean id="simpleRequestHeader2Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
 		<property name="pattern" value="~!HPROPx!~"></property>
 		<property name="mapping">
 			<map>
-				<entry key="HPROPx" value="testProperty2" />
+				<entry key="HPROPx" value="productDescription" />
 			</map>
 		</property>
 	</bean>
@@ -70,9 +70,15 @@
 	<bean id="successBodyParser" class="org.simple4j.wsclient.parser.impl.JSONParser">
 	</bean>
 
-	<!-- <errorResponse> <errorId>ujd83jheusd83ujjsdi</errorId> <errorType>VALIDATION_FAILURE</errorType> 
-		<errorReasonCode>param1-empty</errorReasonCode> <errorReasonCode>param2-maxlength</errorReasonCode> 
-		<description>Some fields failed validation check</description> </errorResponse> -->
+	<!--
+	<errorResponse>
+		<errorId>ujd83jheusd83ujjsdi</errorId>
+		<errorType>VALIDATION_FAILURE</errorType>
+		<errorReasonCode>param1-empty</errorReasonCode>
+		<errorReasonCode>param2-maxlength</errorReasonCode>
+		<description>Some fields failed validation check</description>
+	</errorResponse>
+	 -->
 	<bean id="failureBodyParser" class="org.simple4j.wsclient.parser.impl.XMLParser">
 		<property name="listElementXpaths">
 			<list>
@@ -81,7 +87,8 @@
 		</property>
 	</bean>
 
-	<bean id="putRequestBodyFormatter" class="org.simple4j.wsclient.formatter.impl.VelocityFormatter">
-		<property name="template" value="/client/httpmethods/templates/put.vtl"></property>
+	<bean id="simpleRequestBodyFormatter" class="org.simple4j.wsclient.formatter.impl.FreemarkerFormatter">
+		<property name="configuration" ref="freemarkerConfig"></property>
+		<property name="templateName" value="simple.ftl"></property>
 	</bean>
 </beans>

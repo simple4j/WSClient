@@ -1,0 +1,1 @@
+/simple4j/wsmock/requestobjecttype/complex/~!URLPROP1!~

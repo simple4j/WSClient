@@ -1,0 +1,14 @@
+{
+    "request": {
+        "method": "DELETE",
+        "urlPattern": "/simple4j/wsmock/httpmethods/delete/.*"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"responsevalue\":\"{{request.path.[4]}}\"}",
+        "headers": {
+            "Content-Type": "application/JSON"
+        },
+        "transformers": ["response-template"]
+    }
+}

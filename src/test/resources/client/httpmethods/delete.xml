@@ -6,14 +6,14 @@
                         http://www.springframework.org/schema/context 
                         http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="getCaller" class="org.simple4j.wsclient.caller.Caller">
+	<bean id="deleteCaller" class="org.simple4j.wsclient.caller.Caller">
 		<property name="httpWSClient" ref="httpWSClient"></property>
-		<property name="serviceMethod" value="GET"></property>
-		<property name="requestURLFormatter" ref="requestURLFormatter"></property>
+		<property name="serviceMethod" value="DELETE"></property>
+		<property name="requestURLFormatter" ref="deleteRequestURLFormatter"></property>
 		<property name="requestHeaderFormatters">
 			<map>
-				<entry key="x-header1" value-ref="requestHeader1Formatter"></entry>
-				<entry key="x-header2" value-ref="requestHeader2Formatter"></entry>
+				<entry key="x-header1" value-ref="deleteRequestHeader1Formatter"></entry>
+				<entry key="x-header2" value-ref="deleteRequestHeader2Formatter"></entry>
 			</map>
 		</property>
 		<property name="staticHeaderValues">
@@ -25,19 +25,17 @@
 				</entry>
 			</map>
 		</property>
-		<!-- <property name="requestBodyFormatter" ref="requestBodyFormatter"></property> -->
 		<property name="responseBodyParsers">
 			<map>
 				<entry key="(200)|(204)" value-ref="successBodyFormatter"></entry>
 				<entry key="(404)|(403)" value-ref="failureBodyFormatter"></entry>
 			</map>
 		</property>
-		<!-- <property name="responseBodyToObjectMapping" ref=""></property> -->
 	</bean>
 
-	<bean id="requestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
+	<bean id="deleteRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
 		<property name="pattern"
-			value="/simple4j/wsmock/httpmethods/get/~!URLPROP1!~"></property>
+			value="/simple4j/wsmock/httpmethods/delete/~!URLPROP1!~"></property>
 		<property name="mapping">
 			<map>
 				<entry key="URLPROP1" value="testProperty1" />
@@ -45,7 +43,7 @@
 		</property>
 	</bean>
 
-	<bean id="requestHeader1Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
+	<bean id="deleteRequestHeader1Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
 		<property name="pattern" value="h1~!HPROP1!~"></property>
 		<property name="mapping">
 			<map>
@@ -54,7 +52,7 @@
 		</property>
 	</bean>
 
-	<bean id="requestHeader2Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
+	<bean id="deleteRequestHeader2Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
 		<property name="pattern" value="h2~!HPROPx!~"></property>
 		<property name="mapping">
 			<map>
@@ -78,7 +76,4 @@
 		</property>
 	</bean>
 
-	<!-- <bean id="requestBodyFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter"> 
-		<property name="pattern" value=""></property> <property name="mapping"> <map> 
-		<entry key="" value="" /> </map> </property> </bean> -->
 </beans>
