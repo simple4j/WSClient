@@ -1,0 +1,14 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/simple4j/wsmock/connectionconfig/get/.*"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"responsevalue\":\"{{request.path.[4]}}\"}",
+        "headers": {
+            "Content-Type": "application/JSON"
+        },
+        "transformers": ["response-template"]
+    }
+}

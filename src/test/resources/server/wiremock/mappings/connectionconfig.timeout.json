@@ -1,0 +1,15 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/simple4j/wsmock/connectionconfig/timeout/.*"
+    },
+    "response": {
+        "status": 200,
+        "fixedDelayMilliseconds": 20000,
+        "body": "{\"responsevalue\":\"{{request.path.[4]}}\"}",
+        "headers": {
+            "Content-Type": "application/JSON"
+        },
+        "transformers": ["response-template"]
+    }
+}

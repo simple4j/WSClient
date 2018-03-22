@@ -117,6 +117,28 @@
 		</dependency>
 
 	</dependencies>
+	<build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<excludes>
+					<exclude>**/*.jks</exclude>
+					<exclude>**/*.cer</exclude>
+					<exclude>**/*.csr</exclude>
+				</excludes>
+				<filtering>true</filtering>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<includes>
+					<include>**/*.jks</include>
+					<include>**/*.cer</include>
+					<include>**/*.csr</include>
+				</includes>
+				<filtering>false</filtering>
+			</testResource>
+		</testResources>
+	</build>
 	<description>This is a simple Web Service Client library to call wide variety of web service behind HTTP. In theory it can support any interface or payload.
 
 On the request side, to convert java object to HTTP request components (URL, headers, body), templating is used which allows it to call XML, JSON, SOAP, REST or anyother custom interface.

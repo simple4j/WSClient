@@ -1,0 +1,31 @@
+# generate CA root cert key pair
+keytool -genkeypair -alias ca -keystore CA.jks -dname "CN=CA,OU=simple4j.org" -storepass password1 -keypass password1 -ext bc=ca:true -validity 10001
+
+# generate self signed CA root cert
+keytool -certreq -keystore CA.jks -storepass password1 -alias ca -file ca.csr  -validity 10000
+keytool -gencert -keystore CA.jks -storepass password1 -alias ca -infile ca.csr -outfile ca.cer -validity 10000
+keytool -printcert -file ca.cer
+
+# add CA root to truststore.jks
+keytool -import -alias ca -file ca.cer -keystore truststore.jks -storepass passwordt
+
+
+
+# generate client cert key pair
+keytool -genkeypair -alias client -keystore client.jks -dname "CN=client,OU=simple4j.org" -storepass passwordc -keypass passwordc -validity 10000
+
+# generate client cert
+keytool -certreq -keystore  client.jks -storepass passwordc -alias client -file client.csr -validity 10000
+keytool -gencert -keystore CA.jks  -storepass password1 -alias ca -infile client.csr -outfile client.cer -validity 10000
+keytool -printcert -file client.cer
+
+
+
+# generate server cert key pair
+keytool -genkeypair -alias server -keystore server.jks -dname "CN=server,OU=simple4j.org" -storepass passwords -keypass passwords -ext SAN=dns:localhost,ip:127.0.0.1 -validity 10000
+
+# generate server cert
+keytool -certreq -keystore  server.jks -storepass passwords -alias server -file server.csr -validity 10000
+keytool -gencert -keystore CA.jks  -storepass password1 -alias ca -infile server.csr -outfile server.cer -validity 10000
+keytool -printcert -file server.cer
+
