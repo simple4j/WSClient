@@ -1,3 +1,5 @@
+# !!!!! DO NOT USE THESE CERTIFICATES FOR PRODUCTION. FOR WSClient TEST PURPOSE ONLY !!!!!
+
 # generate CA root cert key pair
 keytool -genkeypair -alias ca -keystore CA.jks -dname "CN=CA,OU=simple4j.org" -storepass password1 -keypass password1 -ext bc=ca:true -validity 10001
 
