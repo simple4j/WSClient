@@ -1,0 +1,14 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/simple4j/wsmock/responseobjecttype/getXML/E-.*"
+    },
+    "response": {
+        "status": 412,
+        "body": "<errorResponse>\n\t\t\t<errorId>{{request.path.[4]}}</errorId>\n\t\t\t<errorType>VALIDATION_FAILURE</errorType>\n\t\t\t<errorReasonCode>param1-empty</errorReasonCode>\n\t\t\t<errorReasonCode>param2-maxlength</errorReasonCode>\n\t\t\t<description>Some fields failed validation check</description>\n\t\t</errorResponse>",
+        "headers": {
+            "Content-Type": "text/XML"
+        },
+        "transformers": ["response-template"]
+    }
+}

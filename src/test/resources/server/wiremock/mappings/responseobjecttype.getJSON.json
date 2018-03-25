@@ -1,0 +1,14 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/simple4j/wsmock/responseobjecttype/getJSON/.*"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"beans\":{\"xmlns:context\":\"http:\/\/www.springframework.org\/schema\/context\",\"xmlns\":\"http:\/\/www.springframework.org\/schema\/beans\",\"xmlns:util\":\"http:\/\/www.springframework.org\/schema\/util\",\"import\":[{\"resource\":\"getJSON.xml\"},{\"resource\":\"getXML.xml\"}],\"xsi:schemaLocation\":\"http:\/\/www.springframework.org\/schema\/beans                         http:\/\/www.springframework.org\/schema\/beans\/spring-beans.xsd                         http:\/\/www.springframework.org\/schema\/context                          http:\/\/www.springframework.org\/schema\/context\/spring-context.xsd                         http:\/\/www.springframework.org\/schema\/util       http:\/\/www.springframework.org\/schema\/util\/spring-util-3.1.xsd\",\"xmlns:xsi\":\"http:\/\/www.w3.org\/2001\/XMLSchema-instance\",\"bean\":[{\"property\":[{\"name\":\"connectionTimeOutMillis\",\"value\":\"1000\"},{\"name\":\"maxConnectionsPerHost\",\"value\":\"2\"},{\"name\":\"numberOfRetries\",\"value\":\"2\"},{\"name\":\"serviceHostName\",\"value\":\"localhost\"},{\"name\":\"servicePortNumber\",\"value\":\"8080\"},{\"name\":\"serviceProtocol\",\"value\":\"http\"},{\"name\":\"socketTimeOutMillis\",\"value\":\"{{request.path.[4]}}\"}],\"id\":\"httpWSClient\",\"class\":\"org.simple4j.wsclient.http.HTTPWSClient\"}]}}",
+        "headers": {
+            "Content-Type": "application/JSON"
+        },
+        "transformers": ["response-template"]
+    }
+}

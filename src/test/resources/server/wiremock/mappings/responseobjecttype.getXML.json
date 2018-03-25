@@ -1,0 +1,14 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/simple4j/wsmock/responseobjecttype/getXML/S-.*"
+    },
+    "response": {
+        "status": 200,
+        "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<beans xmlns=\"http:\/\/www.springframework.org\/schema\/beans\"\n\txmlns:xsi=\"http:\/\/www.w3.org\/2001\/XMLSchema-instance\"\n\txmlns:util=\"http:\/\/www.springframework.org\/schema\/util\"\n\txmlns:context=\"http:\/\/www.springframework.org\/schema\/context\"\n\txsi:schemaLocation=\"http:\/\/www.springframework.org\/schema\/beans\n                        http:\/\/www.springframework.org\/schema\/beans\/spring-beans.xsd\n                        http:\/\/www.springframework.org\/schema\/context\n\n                        http:\/\/www.springframework.org\/schema\/context\/spring-context.xsd\n                        http:\/\/www.springframework.org\/schema\/util\n\t\t\t\t\t\thttp:\/\/www.springframework.org\/schema\/util\/spring-util-3.1.xsd\">\n\t<import resource=\"getJSON.xml\" \/>\n\t<import resource=\"getXML.xml\" \/>\n\t<bean id=\"httpWSClient\" class=\"org.simple4j.wsclient.http.HTTPWSClient\">\n\t\t<property name=\"connectionTimeOutMillis\" value=\"1000\"><\/property>\n\t\t<property name=\"maxConnectionsPerHost\" value=\"2\"><\/property>\n\t\t<property name=\"numberOfRetries\" value=\"2\"><\/property>\n\t\t<property name=\"serviceHostName\" value=\"localhost\"><\/property>\n\t\t<property name=\"servicePortNumber\" value=\"8080\"><\/property>\n\t\t<property name=\"serviceProtocol\" value=\"http\"><\/property>\n\t\t<property name=\"socketTimeOutMillis\" value=\"{{request.path.[4]}}\"><\/property>\n\t<\/bean>\n<\/beans>",
+        "headers": {
+            "Content-Type": "text/XML"
+        },
+        "transformers": ["response-template"]
+    }
+}

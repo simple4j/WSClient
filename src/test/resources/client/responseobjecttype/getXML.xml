@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="getXMLCaller" class="org.simple4j.wsclient.caller.Caller">
+		<property name="httpWSClient" ref="httpWSClient"></property>
+		<property name="serviceMethod" value="GET"></property>
+		<property name="requestURLFormatter" ref="getXMLRequestURLFormatter"></property>
+		<property name="requestHeaderFormatters">
+			<map>
+				<entry key="x-header1" value-ref="getXMLRequestHeader1Formatter"></entry>
+				<entry key="x-header2" value-ref="getXMLRequestHeader2Formatter"></entry>
+			</map>
+		</property>
+		<property name="staticHeaderValues">
+			<map>
+				<entry key="accept-encoding">
+					<list>
+						<value>gzip;q=0</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+		<property name="responseBodyParsers">
+			<map>
+				<entry key="(200)|(204)" value-ref="successBodyXMLParser"></entry>
+				<entry key="(404)|(412)" value-ref="failureBodyXMLParser"></entry>
+			</map>
+		</property>
+		<!-- <property name="responseBodyToObjectMapping" ref=""></property> -->
+	</bean>
+
+	<bean id="getXMLRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
+		<property name="pattern"
+			value="/simple4j/wsmock/responseobjecttype/getXML/~!URLPROP1!~"></property>
+		<property name="mapping">
+			<map>
+				<entry key="URLPROP1" value="testProperty1" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="getXMLRequestHeader1Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
+		<property name="pattern" value="h1~!HPROP1!~"></property>
+		<property name="mapping">
+			<map>
+				<entry key="HPROP1" value="testProperty1" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="getXMLRequestHeader2Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
+		<property name="pattern" value="h2~!HPROPx!~"></property>
+		<property name="mapping">
+			<map>
+				<entry key="HPROPx" value="testProperty2" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- {} -->
+	<bean id="successBodyXMLParser" class="org.simple4j.wsclient.parser.impl.XMLParser">
+		<property name="removePrefix" value="false"></property>
+		<property name="listElementXpaths">
+			<list>
+				<value>/beans/import</value>
+				<value>/beans/bean</value>
+				<value>/beans/bean/property</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 
+		<errorResponse>
+			<errorId>ujd83jheusd83ujjsdi</errorId>
+			<errorType>VALIDATION_FAILURE</errorType>
+			<errorReasonCode>param1-empty</errorReasonCode>
+			<errorReasonCode>param2-maxlength</errorReasonCode> 
+			<description>Some fields failed validation check</description>
+		</errorResponse> 
+	-->
+	<bean id="failureBodyXMLParser" class="org.simple4j.wsclient.parser.impl.XMLParser">
+		<property name="listElementXpaths">
+			<list>
+				<value>/errorResponse/errorReasonCode</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>
