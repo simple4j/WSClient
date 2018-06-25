@@ -1,0 +1,31 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/simple4j/wsmock/responseobjecttype/getXML/S-.*"
+    },
+    "response": {
+        "status": 200,
+        "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<beans xmlns=\"http://www.springframework.org/schema/beans\"\n	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n	xmlns:util=\"http://www.springframework.org/schema/util\"\n	xmlns:context=\"http://www.springframework.org/schema/context\"\n	xsi:schemaLocation=\"http://www.springframework.org/schema/beans\n                        http://www.springframework.org/schema/beans/spring-beans.xsd\n                        http://www.springframework.org/schema/context\n\n                        http://www.springframework.org/schema/context/spring-context.xsd\n                        http://www.springframework.org/schema/util\n						http://www.springframework.org/schema/util/spring-util-3.1.xsd\">\n	<import resource=\"getJSON.xml\" />\n	<import resource=\"getXML.xml\" />\n	<bean id=\"httpWSClient\" class=\"org.simple4j.wsclient.http.HTTPWSClient\">\n		<property name=\"connectionTimeOutMillis\" value=\"1000\"></property>\n		<property name=\"maxConnectionsPerHost\" value=\"2\"></property>\n		<property name=\"numberOfRetries\" value=\"2\"></property>\n		<property name=\"serviceHostName\" value=\"localhost\"></property>\n		<property name=\"servicePortNumber\" value=\"8080\"></property>\n		<property name=\"serviceProtocol\" value=\"http\"></property>\n		<property name=\"socketTimeOutMillis\" value=\"{{request.path.[4]}}\"></property>\n	</bean>\n</beans>",
+        "headers": {
+            "Content-Type": "text/XML"
+        },
+        "transformers": ["response-template"]
+    }
+},
+
+
+
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/simple4j/wsmock/responseobjecttype/getXML/E-.*"
+    },
+    "response": {
+        "status": 412,
+        "body": "<errorResponse>\n			<errorId>{{request.path.[4]}}</errorId>\n			<errorType>VALIDATION_FAILURE</errorType>\n			<errorReasonCode>param1-empty</errorReasonCode>\n			<errorReasonCode>param2-maxlength</errorReasonCode>\n			<description>Some fields failed validation check</description>\n		</errorResponse>",
+        "headers": {
+            "Content-Type": "text/XML"
+        },
+        "transformers": ["response-template"]
+    }
+}

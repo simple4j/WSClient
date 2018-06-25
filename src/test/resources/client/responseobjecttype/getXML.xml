@@ -31,7 +31,15 @@
 				<entry key="(404)|(412)" value-ref="failureBodyXMLParser"></entry>
 			</map>
 		</property>
-		<!-- <property name="responseBodyToObjectMapping" ref=""></property> -->
+		<property name="responseBodyToObjectMapping">
+			<map>
+				<entry key="RESP1" value="beans.xmlns:context"/>
+ 				<entry key="RESP2" value="beans.bean[0].property[6].TEXT"/>
+<!--				<entry key="RESP3" value="beans.bean[0].property[0](*)"/>
+				<entry key="RESP4" value="beans.bean[0].property[*](*)"/>
+ -->
+			</map>
+		</property>
 	</bean>
 
 	<bean id="getXMLRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">

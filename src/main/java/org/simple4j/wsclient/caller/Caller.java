@@ -20,6 +20,7 @@ import org.simple4j.wsclient.formatter.IFormatter;
 import org.simple4j.wsclient.http.HTTPWSClient;
 import org.simple4j.wsclient.http.HTTPWSResponse;
 import org.simple4j.wsclient.parser.IParser;
+import org.simple4j.wsclient.util.CollectionsPathRetreiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,6 +114,8 @@ public class Caller
 	 * Any non templated static request headers and its values.
 	 */
 	private Map<String, List<String>> staticHeaderValues = null;
+	
+	private CollectionsPathRetreiver collectionsPathRetreiver = null;
 
 	public String getResponseHeaderFieldName()
 	{
@@ -244,6 +247,20 @@ public class Caller
 		this.httpResponseObjectFieldName = httpResponseObjectFieldName;
 	}
 
+	public CollectionsPathRetreiver getCollectionsPathRetreiver()
+	{
+		if(collectionsPathRetreiver == null)
+		{
+			collectionsPathRetreiver = new CollectionsPathRetreiver();
+		}
+		return collectionsPathRetreiver;
+	}
+
+	public void setCollectionsPathRetreiver(CollectionsPathRetreiver collectionsPathRetreiver)
+	{
+		this.collectionsPathRetreiver = collectionsPathRetreiver;
+	}
+
 	/**
 	 * A new entry method that could be used for invoking the Caller class This
 	 * method provides support for utilizing the Formatter, Parser and Mapper
@@ -309,8 +326,15 @@ public class Caller
 					Entry<String, IParser> entry = iterator.next();
 					if (("" + response.getStatusCode()).matches(entry.getKey()))
 					{
+						Map<String, ? extends Object> parseDataMap = entry.getValue().parseData(responseBodyAsString);
 						ret.put(this.getHttpResponseObjectFieldName(),
-								entry.getValue().parseData(responseBodyAsString));
+								parseDataMap);
+						Map<String, Object> objectsFromResponseBody = getObjectsFromResponseBody(parseDataMap);
+						if (objectsFromResponseBody != null)
+						{
+							ret.putAll(objectsFromResponseBody);
+						}
+
 						break;
 					}
 				}
@@ -319,13 +343,6 @@ public class Caller
 			// storing the response headers and footers
 			Map<String, String> headersMap = extractHeader(response.getResponseHeaders());
 			ret.put(this.getResponseHeaderFieldName(), headersMap);
-
-			Map<String, Object> objectsFromResponseBody = getObjectsFromResponseBody(
-					ret.get(this.getHttpResponseObjectFieldName()));
-			if (objectsFromResponseBody != null)
-			{
-				ret.putAll(objectsFromResponseBody);
-			}
 
 			// returning data to the requestor
 			return ret;
@@ -355,7 +372,7 @@ public class Caller
 		return response;
 	}
 
-	private Map<String, Object> getObjectsFromResponseBody(Object responseBodyObj)
+	private Map<String, Object> getObjectsFromResponseBody(Map responseBodyObj)
 			throws IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{
 		if (this.getResponseBodyToObjectMapping() == null || this.getResponseBodyToObjectMapping().size() == 0)
@@ -363,7 +380,7 @@ public class Caller
 		Map<String, Object> ret = new HashMap<String, Object>();
 		for (Entry<String, String> entry : this.getResponseBodyToObjectMapping().entrySet())
 		{
-			if (entry.getValue().contains("[*]") || entry.getValue().contains("(*)"))
+/*			if (entry.getValue().contains("[*]") || entry.getValue().contains("(*)"))
 			{
 				ret.put(entry.getKey(), this.getMultiObjectsFromBean(responseBodyObj, entry.getValue()));
 			} else
@@ -376,6 +393,10 @@ public class Caller
 					valueStr = (String) valueObj;
 				ret.put(entry.getKey(), valueStr);
 			}
+*/
+			logger.debug("fetching response object:"+responseBodyObj+", propertyPath:"+entry.getValue());
+			List nestedProperty = this.getCollectionsPathRetreiver().getNestedProperty(responseBodyObj, entry.getValue());
+			ret.put(entry.getKey(), nestedProperty);
 		}
 		return ret;
 	}

@@ -39,6 +39,10 @@ public class XMLParser implements IParser
 	private boolean removePrefix = true;
 
 	private List<String> listElementXpaths = new ArrayList<String>();
+	
+	private List<String> attributedElementXpaths = new ArrayList<String>();
+	
+	private String textNodeKey = "TEXT";
 
 	public boolean isRemovePrefix()
 	{
@@ -58,6 +62,26 @@ public class XMLParser implements IParser
 	public void setListElementXpaths(List<String> listElementXpaths)
 	{
 		this.listElementXpaths = listElementXpaths;
+	}
+
+	public List<String> getAttributedElementXpaths()
+	{
+		return attributedElementXpaths;
+	}
+
+	public void setAttributedElementXpaths(List<String> attributedElementXpaths)
+	{
+		this.attributedElementXpaths = attributedElementXpaths;
+	}
+
+	public String getTextNodeKey()
+	{
+		return textNodeKey;
+	}
+
+	public void setTextNodeKey(String textNodeKey)
+	{
+		this.textNodeKey = textNodeKey;
 	}
 
 	public Map<String, ? extends Object> parseData(String inputXMLStr)
@@ -99,7 +123,7 @@ public class XMLParser implements IParser
 			return ret;
 		if (node.getNodeType() == Node.TEXT_NODE || node.getNodeType() == Node.CDATA_SECTION_NODE)
 		{
-			ret.put("TEXT@" + handlePrefix(node.getParentNode().getNodeName()), (Object) node.getNodeValue());
+			ret.put(getTextNodeKey(), (Object) node.getNodeValue());
 			return ret;
 		}
 
@@ -138,20 +162,11 @@ public class XMLParser implements IParser
 					} else
 					{
 						// 1-N check
-						boolean isListElement = false;
-						for (int j = 0; j < listElementXpaths.size() && !isListElement; j++)
-						{
-							String listElementXpath = listElementXpaths.get(j);
-							isListElement = doesNodeMatchXpath(child, listElementXpath);
-						}
+						boolean isListElement = doesNodeMatchAnyXpath(child, this.getListElementXpaths());
 
 						if (isListElement)
 						{
-							Object value = tempMap;
-							if (tempMap != null && tempMap.containsKey("TEXT@" + childNodeName))
-							{
-								value = tempMap.get("TEXT@" + childNodeName);
-							}
+							Object value = processAttributedElements(child, tempMap);
 
 							List<Object> values = null;
 							if (!ret.containsKey(childNodeName))
@@ -163,13 +178,10 @@ public class XMLParser implements IParser
 								values = (List<Object>) ret.get(childNodeName);
 							}
 							values.add(value);
-						} else
+						}
+						else
 						{
-							Object value = tempMap;
-							if (tempMap != null && tempMap.containsKey("TEXT@" + childNodeName))
-							{
-								value = tempMap.get("TEXT@" + childNodeName);
-							}
+							Object value = processAttributedElements(child, tempMap);
 
 							if (ret.containsKey(childNodeName))
 							{
@@ -198,6 +210,41 @@ public class XMLParser implements IParser
 			}
 		}
 		return ret;
+	}
+
+	private Object processAttributedElements(Node child, Map<String, ? extends Object> tempMap)
+			throws XPathExpressionException, ParserConfigurationException, SAXException, IOException
+	{
+		Object value = tempMap;
+		if(doesNodeMatchAnyXpath(child, this.getAttributedElementXpaths()))
+		{
+			// continue adding the whole Map as some may be without attribute and some may be with attribute
+		}
+		else
+		{
+			if (tempMap != null && tempMap.containsKey(getTextNodeKey()) && tempMap.size() == 1)
+			{
+				// if node does not contain any attributes, avoid having another Map
+				value = tempMap.get(getTextNodeKey());
+			}
+			else
+			{
+				// continue adding the whole Map as this node is not configured as attributed but has attributes
+			}
+		}
+		return value;
+	}
+
+	private boolean doesNodeMatchAnyXpath(Node child, List<String> xpaths)
+			throws XPathExpressionException, ParserConfigurationException, SAXException, IOException
+	{
+		boolean isListElement = false;
+		for (int j = 0; j < xpaths.size() && !isListElement; j++)
+		{
+			String listElementXpath = xpaths.get(j);
+			isListElement = doesNodeMatchXpath(child, listElementXpath);
+		}
+		return isListElement;
 	}
 
 	private String handlePrefix(String nodeName)

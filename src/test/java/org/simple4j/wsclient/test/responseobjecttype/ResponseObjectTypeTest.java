@@ -2,6 +2,7 @@ package org.simple4j.wsclient.test.responseobjecttype;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +109,34 @@ public class ResponseObjectTypeTest
 				break;
 			}
 		}
+	}
+
+	@Test
+	public void testGetNestedAttributeObjectFromXMLBody()
+	{
+		logger.info("inside testGetNestedAttributeObjectFromXMLBody");
+		HashMap<String, String> reqObj = new HashMap<String, String>();
+		reqObj.put("testProperty1", "S-" + System.currentTimeMillis());
+		reqObj.put("testProperty2", "param2");
+		Map<String, Object> response = getXMLCaller.serviceCall(reqObj);
+		logger.info("response from call {}", response);
+		List<String> expectedResult = new ArrayList<String>();
+		expectedResult.add("http://www.springframework.org/schema/context");
+		assertEquals("Object RESP1 does not match", expectedResult, response.get("RESP1"));
+	}
+
+	@Test
+	public void testGetNestedTextObjectFromXMLBody()
+	{
+		logger.info("inside testGetNestedTextObjectFromXMLBody");
+		HashMap<String, String> reqObj = new HashMap<String, String>();
+		reqObj.put("testProperty1", "S-" + System.currentTimeMillis());
+		reqObj.put("testProperty2", "param2");
+		Map<String, Object> response = getXMLCaller.serviceCall(reqObj);
+		logger.info("response from call {}", response);
+		List<String> expectedResult = new ArrayList<String>();
+		expectedResult.add("sampleText");
+		assertEquals("Object RESP2 does not match", expectedResult, response.get("RESP2"));
 	}
 
 	@Test
