@@ -46,13 +46,13 @@ public class Caller
 	/**
 	 * Mapping to gather response values using property path notation. Key is the
 	 * response field name and value is the property path expression. For example,
-	 * in prop1.prop2[0].prop3("abc"): prop1 - is a simple property prop2 - is an
+	 * in prop1.prop2[0].prop3.abc: prop1 - is a simple property prop2 - is an
 	 * indexed property (List, Array etc.) with [0] representing first element prop3
-	 * - is a java.util.Map property with ("abc") representing the value with key
+	 * - is a java.util.Map property with abc representing the value with key
 	 * "abc"
 	 * 
 	 * This also supports * wildcard for the index and the key. For example,
-	 * prop1.prop2[*].prop3(*)
+	 * prop1.prop2[*].prop3.*.prop4
 	 */
 	private Map<String, String> responseBodyToObjectMapping;
 
