@@ -48,8 +48,7 @@ public class Caller
 	 * response field name and value is the property path expression. For example,
 	 * in prop1.prop2[0].prop3.abc: prop1 - is a simple property prop2 - is an
 	 * indexed property (List, Array etc.) with [0] representing first element prop3
-	 * - is a java.util.Map property with abc representing the value with key
-	 * "abc"
+	 * - is a java.util.Map property with abc representing the value with key "abc"
 	 * 
 	 * This also supports * wildcard for the index and the key. For example,
 	 * prop1.prop2[*].prop3.*.prop4
@@ -114,7 +113,7 @@ public class Caller
 	 * Any non templated static request headers and its values.
 	 */
 	private Map<String, List<String>> staticHeaderValues = null;
-	
+
 	private CollectionsPathRetreiver collectionsPathRetreiver = null;
 
 	public String getResponseHeaderFieldName()
@@ -249,7 +248,7 @@ public class Caller
 
 	public CollectionsPathRetreiver getCollectionsPathRetreiver()
 	{
-		if(collectionsPathRetreiver == null)
+		if (collectionsPathRetreiver == null)
 		{
 			collectionsPathRetreiver = new CollectionsPathRetreiver();
 		}
@@ -327,8 +326,7 @@ public class Caller
 					if (("" + response.getStatusCode()).matches(entry.getKey()))
 					{
 						Map<String, ? extends Object> parseDataMap = entry.getValue().parseData(responseBodyAsString);
-						ret.put(this.getHttpResponseObjectFieldName(),
-								parseDataMap);
+						ret.put(this.getHttpResponseObjectFieldName(), parseDataMap);
 						Map<String, Object> objectsFromResponseBody = getObjectsFromResponseBody(parseDataMap);
 						if (objectsFromResponseBody != null)
 						{
@@ -380,22 +378,18 @@ public class Caller
 		Map<String, Object> ret = new HashMap<String, Object>();
 		for (Entry<String, String> entry : this.getResponseBodyToObjectMapping().entrySet())
 		{
-/*			if (entry.getValue().contains("[*]") || entry.getValue().contains("(*)"))
-			{
-				ret.put(entry.getKey(), this.getMultiObjectsFromBean(responseBodyObj, entry.getValue()));
-			} else
-			{
-				Object valueObj = PropertyUtils.getNestedProperty(responseBodyObj, entry.getValue());
-				String valueStr;
-				if (valueObj != null && !(valueObj instanceof String))
-					valueStr = "" + valueObj;
-				else
-					valueStr = (String) valueObj;
-				ret.put(entry.getKey(), valueStr);
-			}
-*/
-			logger.debug("fetching response object:"+responseBodyObj+", propertyPath:"+entry.getValue());
-			List nestedProperty = this.getCollectionsPathRetreiver().getNestedProperty(responseBodyObj, entry.getValue());
+			/*
+			 * if (entry.getValue().contains("[*]") || entry.getValue().contains("(*)")) {
+			 * ret.put(entry.getKey(), this.getMultiObjectsFromBean(responseBodyObj,
+			 * entry.getValue())); } else { Object valueObj =
+			 * PropertyUtils.getNestedProperty(responseBodyObj, entry.getValue()); String
+			 * valueStr; if (valueObj != null && !(valueObj instanceof String)) valueStr =
+			 * "" + valueObj; else valueStr = (String) valueObj; ret.put(entry.getKey(),
+			 * valueStr); }
+			 */
+			logger.debug("fetching response object:" + responseBodyObj + ", propertyPath:" + entry.getValue());
+			List nestedProperty = this.getCollectionsPathRetreiver().getNestedProperty(responseBodyObj,
+					entry.getValue());
 			ret.put(entry.getKey(), nestedProperty);
 		}
 		return ret;
