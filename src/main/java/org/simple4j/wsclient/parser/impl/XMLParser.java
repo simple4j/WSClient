@@ -39,9 +39,9 @@ public class XMLParser implements IParser
 	private boolean removePrefix = true;
 
 	private List<String> listElementXpaths = new ArrayList<String>();
-	
+
 	private List<String> attributedElementXpaths = new ArrayList<String>();
-	
+
 	private String textNodeKey = "TEXT";
 
 	public boolean isRemovePrefix()
@@ -178,8 +178,7 @@ public class XMLParser implements IParser
 								values = (List<Object>) ret.get(childNodeName);
 							}
 							values.add(value);
-						}
-						else
+						} else
 						{
 							Object value = processAttributedElements(child, tempMap);
 
@@ -216,20 +215,20 @@ public class XMLParser implements IParser
 			throws XPathExpressionException, ParserConfigurationException, SAXException, IOException
 	{
 		Object value = tempMap;
-		if(doesNodeMatchAnyXpath(child, this.getAttributedElementXpaths()))
+		if (doesNodeMatchAnyXpath(child, this.getAttributedElementXpaths()))
 		{
-			// continue adding the whole Map as some may be without attribute and some may be with attribute
-		}
-		else
+			// continue adding the whole Map as some may be without attribute and some may
+			// be with attribute
+		} else
 		{
 			if (tempMap != null && tempMap.containsKey(getTextNodeKey()) && tempMap.size() == 1)
 			{
 				// if node does not contain any attributes, avoid having another Map
 				value = tempMap.get(getTextNodeKey());
-			}
-			else
+			} else
 			{
-				// continue adding the whole Map as this node is not configured as attributed but has attributes
+				// continue adding the whole Map as this node is not configured as attributed
+				// but has attributes
 			}
 		}
 		return value;

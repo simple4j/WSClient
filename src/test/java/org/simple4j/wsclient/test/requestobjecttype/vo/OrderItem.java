@@ -4,9 +4,9 @@ public class OrderItem
 {
 
 	private String orderItemId;
-	
+
 	private String status;
-	
+
 	private int quantity;
 
 	public String getOrderItemId()
@@ -47,5 +47,5 @@ public class OrderItem
 				.append(getStatus()).append(", getQuantity()=").append(getQuantity()).append("]");
 		return builder.toString();
 	}
-	
+
 }

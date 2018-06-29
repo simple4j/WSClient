@@ -97,15 +97,16 @@ public class ResponseObjectTypeTest
 	{
 		assertEquals("call HTTP status code does not match", "200", response.get("HTTP_STATUS_CODE"));
 		Map responseObject = (Map) response.get("HTTP_RESPONSE_OBJECT");
-		Map beansMap = (Map)responseObject.get("beans");
-		List beanList = (List)beansMap.get("bean");
-		Map beanMap = (Map)beanList.get(0);
-		List<Map> propertyList = (List<Map>)beanMap.get("property");
-		for(int i = 0 ; i < propertyList.size() ; i++)
+		Map beansMap = (Map) responseObject.get("beans");
+		List beanList = (List) beansMap.get("bean");
+		Map beanMap = (Map) beanList.get(0);
+		List<Map> propertyList = (List<Map>) beanMap.get("property");
+		for (int i = 0; i < propertyList.size(); i++)
 		{
-			if("socketTimeOutMillis".equals(propertyList.get(i).get("name")))
+			if ("socketTimeOutMillis".equals(propertyList.get(i).get("name")))
 			{
-				assertEquals("Get call response does not match", reqObj.get("testProperty1"), propertyList.get(i).get("value"));
+				assertEquals("Get call response does not match", reqObj.get("testProperty1"),
+						propertyList.get(i).get("value"));
 				break;
 			}
 		}
@@ -149,14 +150,16 @@ public class ResponseObjectTypeTest
 		Map<String, Object> response = getXMLCaller.serviceCall(reqObj);
 		logger.info("response from call {}", response);
 		assertEquals("call HTTP status code does not match", "412", response.get("HTTP_STATUS_CODE"));
-		
+
 		Map responseObject = (Map) response.get("HTTP_RESPONSE_OBJECT");
-		Map errorResponseMap = (Map)responseObject.get("errorResponse");
+		Map errorResponseMap = (Map) responseObject.get("errorResponse");
 		List errorReasonCodeList = (List) errorResponseMap.get("errorReasonCode");
 		assertTrue("errorReasonCode does not contain param1-empty", errorReasonCodeList.contains("param1-empty"));
-		assertTrue("errorReasonCode does not contain param2-maxlength", errorReasonCodeList.contains("param2-maxlength"));
+		assertTrue("errorReasonCode does not contain param2-maxlength",
+				errorReasonCodeList.contains("param2-maxlength"));
 		assertEquals("errorType does not match", "VALIDATION_FAILURE", errorResponseMap.get("errorType"));
-		assertEquals("description does not match", "Some fields failed validation check", errorResponseMap.get("description"));
+		assertEquals("description does not match", "Some fields failed validation check",
+				errorResponseMap.get("description"));
 		assertEquals("errorId does not match", reqObj.get("testProperty1"), errorResponseMap.get("errorId"));
 	}
 

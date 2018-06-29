@@ -22,7 +22,7 @@ public class CollectionsPathRetreiverTest
 	{
 		Map randomSalesPersonMap = getRandomSalesPersonMap();
 		CollectionsPathRetreiver cpr = new CollectionsPathRetreiver();
-		//TODO: verified manually but will have to switch to assertions.
+		// TODO: verified manually but will have to switch to assertions.
 		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "salesPersonId"));
 		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "salesPersonId1"));
 		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders"));
@@ -42,12 +42,12 @@ public class CollectionsPathRetreiverTest
 	private static Map getRandomSalesPersonMap()
 	{
 		Map ret = new HashMap();
-		ret.put("salesPersonId", "sp-"+UUID.randomUUID());
-		
+		ret.put("salesPersonId", "sp-" + UUID.randomUUID());
+
 		List orders = new ArrayList();
 		orders.add(getRandomOrderMap());
 		orders.add(getRandomOrderMap());
-		
+
 		ret.put("orders", orders);
 		return ret;
 	}
@@ -55,30 +55,30 @@ public class CollectionsPathRetreiverTest
 	private static Map getRandomOrderMap()
 	{
 		Map ret = new HashMap();
-		ret.put("orderDate",new Date());
-		ret.put("orderId","oi"+UUID.randomUUID().toString());
+		ret.put("orderDate", new Date());
+		ret.put("orderId", "oi" + UUID.randomUUID().toString());
 		Map orderItems = new HashMap();
 		orderItems.put(getRandomProductMap(), getRandomOrderItemMap());
 		orderItems.put(getRandomProductMap(), getRandomOrderItemMap());
-		ret.put("orderItems",orderItems);
+		ret.put("orderItems", orderItems);
 		return ret;
 	}
 
 	private static Map getRandomOrderItemMap()
 	{
 		Map ret = new HashMap();
-		ret.put("orderItemId","oii"+UUID.randomUUID());
-		ret.put("quantity",new Random().nextInt(10));
-		ret.put("status","ois"+UUID.randomUUID());
+		ret.put("orderItemId", "oii" + UUID.randomUUID());
+		ret.put("quantity", new Random().nextInt(10));
+		ret.put("status", "ois" + UUID.randomUUID());
 		return ret;
 	}
 
 	private static Map getRandomProductMap()
 	{
 		Map ret = new HashMap();
-		ret.put("productId",new Random().nextInt(99999));
-		ret.put("productDescription","This is a sample test product:"+ret.get("productId"));
+		ret.put("productId", new Random().nextInt(99999));
+		ret.put("productDescription", "This is a sample test product:" + ret.get("productId"));
 		return ret;
 	}
-	
+
 }

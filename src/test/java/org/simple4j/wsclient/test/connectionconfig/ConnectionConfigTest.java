@@ -30,9 +30,9 @@ public class ConnectionConfigTest
 	private static WireMockServer wireMockServer = null;
 
 	private static Caller getCaller = null;
-	
+
 	private static Caller timeoutCaller = null;
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
 	{
@@ -47,13 +47,10 @@ public class ConnectionConfigTest
 		logger.info("serverKeystorePath:{}", serverKeystorePath);
 		String trustStorePath = context.getResource("classpath:/certs/truststore.jks").getFile().getAbsolutePath();
 		logger.info("trustStorePath:{}", trustStorePath);
-		wireMockServer = new WireMockServer(WireMockConfiguration.options().port(8080)
-				.httpsPort(8443)
-				.keystorePassword("passwords")
-				.keystorePath(serverKeystorePath)
-				.trustStorePassword("passwordt")
-				.trustStorePath(trustStorePath)
-				.usingFilesUnderClasspath("server/wiremock").extensions(new ResponseTemplateTransformer(true)));
+		wireMockServer = new WireMockServer(
+				WireMockConfiguration.options().port(8080).httpsPort(8443).keystorePassword("passwords")
+						.keystorePath(serverKeystorePath).trustStorePassword("passwordt").trustStorePath(trustStorePath)
+						.usingFilesUnderClasspath("server/wiremock").extensions(new ResponseTemplateTransformer(true)));
 		wireMockServer.start();
 
 		logger.info("wiremock started");
@@ -105,12 +102,12 @@ public class ConnectionConfigTest
 			logger.info("response from call", response);
 			String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 			logger.info(responsevalue);
-		}
-		catch (RuntimeException e)
+		} catch (RuntimeException e)
 		{
 			logger.warn("Expected exception for timeout", e);
 		}
-		WireMock.verify(2, WireMock.getRequestedFor(WireMock.urlEqualTo("/simple4j/wsmock/connectionconfig/timeout/"+reqObj.get("testProperty1"))));
+		WireMock.verify(2, WireMock.getRequestedFor(
+				WireMock.urlEqualTo("/simple4j/wsmock/connectionconfig/timeout/" + reqObj.get("testProperty1"))));
 	}
 
 }

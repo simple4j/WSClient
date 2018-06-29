@@ -6,7 +6,7 @@ public class SalesPerson
 {
 
 	private String salesPersonId;
-	
+
 	private List<Order> orders;
 
 	public String getSalesPersonId()
@@ -33,10 +33,9 @@ public class SalesPerson
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(super.toString()).append("[getSalesPersonId()=").append(getSalesPersonId()).append(", getOrders()=")
-				.append(getOrders()).append("]");
+		builder.append(super.toString()).append("[getSalesPersonId()=").append(getSalesPersonId())
+				.append(", getOrders()=").append(getOrders()).append("]");
 		return builder.toString();
 	}
-	
-	
+
 }

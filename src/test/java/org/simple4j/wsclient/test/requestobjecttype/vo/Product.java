@@ -4,7 +4,7 @@ public class Product
 {
 
 	private Integer productId;
-	
+
 	private String productDescription;
 
 	public Integer getProductId()
@@ -31,9 +31,9 @@ public class Product
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(super.toString()).append("[getProductId()=").append(getProductId()).append(", getProductDescription()=")
-				.append(getProductDescription()).append("]");
+		builder.append(super.toString()).append("[getProductId()=").append(getProductId())
+				.append(", getProductDescription()=").append(getProductDescription()).append("]");
 		return builder.toString();
 	}
-	
+
 }

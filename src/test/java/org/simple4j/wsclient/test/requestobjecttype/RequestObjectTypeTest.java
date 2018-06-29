@@ -77,7 +77,8 @@ public class RequestObjectTypeTest
 	@Test
 	public void testSimpleObject()
 	{
-		//TODO : generating body as "bodyparam1":"bp112,345" need to check ftl documentation for integer formatting
+		// TODO : generating body as "bodyparam1":"bp112,345" need to check ftl
+		// documentation for integer formatting
 		logger.info("inside testSimpleObject");
 		Product product = new Product();
 		product.setProductDescription("This is a sample test product");
@@ -87,79 +88,52 @@ public class RequestObjectTypeTest
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 		logger.info(responsevalue);
 		// HTTP_RESPONSE_OBJECT
-		assertEquals("Post call response does not match", "rvh1"+product.getProductId(), responsevalue);
+		assertEquals("Post call response does not match", "rvh1" + product.getProductId(), responsevalue);
 	}
 
 	@Test
 	public void testComplexObject()
 	{
-		//TODO : generating body as "bodyparam1":"bp112,345" need to check ftl documentation for integer formatting
+		// TODO : generating body as "bodyparam1":"bp112,345" need to check ftl
+		// documentation for integer formatting
 		logger.info("inside testComplexObject");
 
 		SalesPerson sp = getRandomSalesPerson();
-		
+
 		logger.info("calling with param {}", sp);
 		Map<String, Object> response = complexCaller.serviceCall(sp);
 		logger.info("response from call {}", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 		logger.info(responsevalue);
 		// HTTP_RESPONSE_OBJECT
-		assertEquals("Post call response does not match", "rvh1"+sp.getSalesPersonId(), responsevalue);
+		assertEquals("Post call response does not match", "rvh1" + sp.getSalesPersonId(), responsevalue);
 	}
 
 	private SalesPerson getRandomSalesPerson()
 	{
 		SalesPerson sp = new SalesPerson();
-		sp.setSalesPersonId("sp-"+UUID.randomUUID());
-		
+		sp.setSalesPersonId("sp-" + UUID.randomUUID());
+
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(getRandomOrder());
 		orders.add(getRandomOrder());
-		
-		sp.setOrders(orders );
+
+		sp.setOrders(orders);
 		return sp;
 	}
-/*
-{
-	"salesPersonId":"abcd",
-	"orders":
-	[
-		{
-			"orderDate":"",
-			"orderId":"",
-			"orderItems":
-			[
-				{
-					"productId":"",
-					"productDescription":"",
-					"orderItemId":"",
-					"quantity":"",
-					"status":""
-				}
-			]
-		},
-		{
-			"orderDate":"",
-			"orderId":"",
-			"orderItems":
-			[
-				{
-					"productId":"",
-					"productDescription":"",
-					"orderItemId":"",
-					"quantity":"",
-					"status":""
-				}
-			]
-		}
-	]
-}	
- */
+
+	/*
+	 * { "salesPersonId":"abcd", "orders": [ { "orderDate":"", "orderId":"",
+	 * "orderItems": [ { "productId":"", "productDescription":"", "orderItemId":"",
+	 * "quantity":"", "status":"" } ] }, { "orderDate":"", "orderId":"",
+	 * "orderItems": [ { "productId":"", "productDescription":"", "orderItemId":"",
+	 * "quantity":"", "status":"" } ] } ] }
+	 */
 	private Order getRandomOrder()
 	{
 		Order ret = new Order();
 		ret.setOrderDate(new Date());
-		ret.setOrderId("oi"+UUID.randomUUID().toString());
+		ret.setOrderId("oi" + UUID.randomUUID().toString());
 		Map<Product, OrderItem> orderItems = new HashMap<Product, OrderItem>();
 		orderItems.put(this.getRandomProduct(), this.getRandomOrderItem());
 		orderItems.put(this.getRandomProduct(), this.getRandomOrderItem());
@@ -171,45 +145,46 @@ public class RequestObjectTypeTest
 	{
 		Product ret = new Product();
 		ret.setProductId(new Random().nextInt(99999));
-		ret.setProductDescription("This is a sample test product:"+ret.getProductId());
+		ret.setProductDescription("This is a sample test product:" + ret.getProductId());
 		return ret;
 	}
 
 	private OrderItem getRandomOrderItem()
 	{
 		OrderItem ret = new OrderItem();
-		ret.setOrderItemId("oii"+UUID.randomUUID());
+		ret.setOrderItemId("oii" + UUID.randomUUID());
 		ret.setQuantity(new Random().nextInt(10));
-		ret.setStatus("ois"+UUID.randomUUID());
+		ret.setStatus("ois" + UUID.randomUUID());
 		return ret;
 	}
 
 	@Test
 	public void testComplexCollectionObject()
 	{
-		//TODO : generating body as "bodyparam1":"bp112,345" need to check ftl documentation for integer formatting
+		// TODO : generating body as "bodyparam1":"bp112,345" need to check ftl
+		// documentation for integer formatting
 		logger.info("inside testComplexCollectionObject");
 
 		Map sp = getRandomSalesPersonMap();
-		
+
 		logger.info("calling with param {}", sp);
 		Map<String, Object> response = complexCaller.serviceCall(sp);
 		logger.info("response from call {}", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 		logger.info(responsevalue);
 		// HTTP_RESPONSE_OBJECT
-		assertEquals("Post call response does not match", "rvh1"+sp.get("salesPersonId"), responsevalue);
+		assertEquals("Post call response does not match", "rvh1" + sp.get("salesPersonId"), responsevalue);
 	}
 
 	private Map getRandomSalesPersonMap()
 	{
 		Map ret = new HashMap();
-		ret.put("salesPersonId", "sp-"+UUID.randomUUID());
-		
+		ret.put("salesPersonId", "sp-" + UUID.randomUUID());
+
 		List orders = new ArrayList();
 		orders.add(getRandomOrderMap());
 		orders.add(getRandomOrderMap());
-		
+
 		ret.put("orders", orders);
 		return ret;
 	}
@@ -217,29 +192,29 @@ public class RequestObjectTypeTest
 	private Map getRandomOrderMap()
 	{
 		Map ret = new HashMap();
-		ret.put("orderDate",new Date());
-		ret.put("orderId","oi"+UUID.randomUUID().toString());
+		ret.put("orderDate", new Date());
+		ret.put("orderId", "oi" + UUID.randomUUID().toString());
 		Map orderItems = new HashMap();
 		orderItems.put(this.getRandomProductMap(), this.getRandomOrderItemMap());
 		orderItems.put(this.getRandomProductMap(), this.getRandomOrderItemMap());
-		ret.put("orderItems",orderItems);
+		ret.put("orderItems", orderItems);
 		return ret;
 	}
 
 	private Map getRandomOrderItemMap()
 	{
 		Map ret = new HashMap();
-		ret.put("orderItemId","oii"+UUID.randomUUID());
-		ret.put("quantity",new Random().nextInt(10));
-		ret.put("status","ois"+UUID.randomUUID());
+		ret.put("orderItemId", "oii" + UUID.randomUUID());
+		ret.put("quantity", new Random().nextInt(10));
+		ret.put("status", "ois" + UUID.randomUUID());
 		return ret;
 	}
 
 	private Map getRandomProductMap()
 	{
 		Map ret = new HashMap();
-		ret.put("productId",new Random().nextInt(99999));
-		ret.put("productDescription","This is a sample test product:"+ret.get("productId"));
+		ret.put("productId", new Random().nextInt(99999));
+		ret.put("productDescription", "This is a sample test product:" + ret.get("productId"));
 		return ret;
 	}
 

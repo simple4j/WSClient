@@ -373,7 +373,8 @@ public class Caller
 	private Map<String, Object> getObjectsFromResponseBody(Map responseBodyObj)
 			throws IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{
-		if (this.getResponseBodyToCustomFieldMapping() == null || this.getResponseBodyToCustomFieldMapping().size() == 0)
+		if (this.getResponseBodyToCustomFieldMapping() == null
+				|| this.getResponseBodyToCustomFieldMapping().size() == 0)
 			return null;
 		Map<String, Object> ret = new HashMap<String, Object>();
 		for (Entry<String, String> entry : this.getResponseBodyToCustomFieldMapping().entrySet())

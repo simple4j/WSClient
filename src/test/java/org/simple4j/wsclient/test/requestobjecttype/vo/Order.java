@@ -7,10 +7,10 @@ public class Order
 {
 
 	private String orderId;
-	
-	//TODO: need to check data time formatters in freemarker and velocity
+
+	// TODO: need to check data time formatters in freemarker and velocity
 	private Date orderDate;
-	
+
 	private Map<Product, OrderItem> orderItems;
 
 	public String getOrderId()
@@ -51,5 +51,5 @@ public class Order
 				.append(getOrderDate()).append(", getOrderItems()=").append(getOrderItems()).append("]");
 		return builder.toString();
 	}
-	
+
 }
