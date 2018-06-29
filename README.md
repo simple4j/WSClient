@@ -16,7 +16,7 @@ The entry point for the client code is org.simple4j.wsclient.caller.Caller.servi
 Sample code showing how to configure and use various capabilities of the framework can be found in test cases. The test cases use WireMock to have a mock web service. The client code is configured and executed from the test cases.
 
 Test cases from simple to complex case.
-ConnectionConfigTest
-MethodsTest
-RrequestObjectTypeTest
-ResponseObjectTypeTest
+* ConnectionConfigTest
+* MethodsTest
+* RrequestObjectTypeTest
+* ResponseObjectTypeTest
