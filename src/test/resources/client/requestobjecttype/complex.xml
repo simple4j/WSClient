@@ -35,7 +35,7 @@
 				<entry key="(404)|(403)" value-ref="failureBodyParser"></entry>
 			</map>
 		</property>
-		<!-- <property name="responseBodyToObjectMapping" ref=""></property> -->
+		<!-- <property name="responseBodyToCustomFieldMapping" ref=""></property> -->
 	</bean>
 
 	<bean id="complexRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.FreemarkerFormatter">

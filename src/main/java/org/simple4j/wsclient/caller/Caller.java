@@ -53,7 +53,7 @@ public class Caller
 	 * This also supports * wildcard for the index and the key. For example,
 	 * prop1.prop2[*].prop3.*.prop4
 	 */
-	private Map<String, String> responseBodyToObjectMapping;
+	private Map<String, String> responseBodyToCustomFieldMapping;
 
 	/**
 	 * The field name where the HTTP status code will be returned. The default value
@@ -216,14 +216,14 @@ public class Caller
 		this.serviceMethod = serviceMethod;
 	}
 
-	public Map<String, String> getResponseBodyToObjectMapping()
+	public Map<String, String> getResponseBodyToCustomFieldMapping()
 	{
-		return responseBodyToObjectMapping;
+		return responseBodyToCustomFieldMapping;
 	}
 
-	public void setResponseBodyToObjectMapping(Map<String, String> responseBodyToObjectMapping)
+	public void setResponseBodyToCustomFieldMapping(Map<String, String> responseBodyToCustomFieldMapping)
 	{
-		this.responseBodyToObjectMapping = responseBodyToObjectMapping;
+		this.responseBodyToCustomFieldMapping = responseBodyToCustomFieldMapping;
 	}
 
 	public String getHttpStatusCodeFieldName()
@@ -373,10 +373,10 @@ public class Caller
 	private Map<String, Object> getObjectsFromResponseBody(Map responseBodyObj)
 			throws IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{
-		if (this.getResponseBodyToObjectMapping() == null || this.getResponseBodyToObjectMapping().size() == 0)
+		if (this.getResponseBodyToCustomFieldMapping() == null || this.getResponseBodyToCustomFieldMapping().size() == 0)
 			return null;
 		Map<String, Object> ret = new HashMap<String, Object>();
-		for (Entry<String, String> entry : this.getResponseBodyToObjectMapping().entrySet())
+		for (Entry<String, String> entry : this.getResponseBodyToCustomFieldMapping().entrySet())
 		{
 			/*
 			 * if (entry.getValue().contains("[*]") || entry.getValue().contains("(*)")) {

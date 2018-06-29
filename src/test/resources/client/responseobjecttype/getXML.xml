@@ -31,7 +31,7 @@
 				<entry key="(404)|(412)" value-ref="failureBodyXMLParser"></entry>
 			</map>
 		</property>
-		<property name="responseBodyToObjectMapping">
+		<property name="responseBodyToCustomFieldMapping">
 			<map>
 				<entry key="RESP1" value="beans.xmlns:context"/>
  				<entry key="RESP2" value="beans.bean[0].property[6].TEXT"/>

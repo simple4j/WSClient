@@ -31,7 +31,7 @@
 				<entry key="(404)|(403)" value-ref="failureBodyJSONParser"></entry>
 			</map>
 		</property>
-		<!-- <property name="responseBodyToObjectMapping" ref=""></property> -->
+		<!-- <property name="responseBodyToCustomFieldMapping" ref=""></property> -->
 	</bean>
 
 	<bean id="getJSONRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
