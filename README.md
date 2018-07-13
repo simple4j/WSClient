@@ -11,7 +11,7 @@ Currently, Freemarker, Velocity and a custom simple templates are being supporte
 
 On the response parsing side, XML and JSON are supported and it can be extended from IParser for any additional support. If the response body has lot of nested attributes, custom retrieval can be configured (Caller.responseBodyToCustomFieldMapping) using nested wildcardable paths.
 
-The entry point for the client code is org.simple4j.wsclient.caller.Caller.serviceCall
+The entry point for the client code is org.simple4j.wsclient.caller.Caller.call
 
 Sample code showing how to configure and use various capabilities of the framework can be found in test cases. The test cases use WireMock to have a mock web service. The client code is configured and executed from the test cases.
 

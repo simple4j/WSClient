@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is an implementation were the inputObject is ignored and a static value is always returned
+ * 
  * @author jsrinivas108
  */
 public class DummyFormatter implements IFormatter
@@ -23,7 +25,7 @@ public class DummyFormatter implements IFormatter
 		this.value = value;
 	}
 
-	public String formatData(Object arg)
+	public String formatData(Object inputObject)
 	{
 		return this.getValue();
 	}

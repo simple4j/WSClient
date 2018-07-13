@@ -12,16 +12,39 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This implementation of IFormatter is to do simple find and replace formatting.
+ * It first extracts key value pairs based on path navigation using org.apache.commons.beanutils.PropertyUtils
+ * and applies the keys to the template.
+ * 
+ * It has limitations on 1-n relationships and deep object hierarchy navigation.
+ * 
  * @author jsrinivas108
  */
 public class SimpleFormatter implements IFormatter
 {
 
 	private static Logger logger = LoggerFactory.getLogger(SimpleFormatter.class);
+	
+	/**
+	 * Replacement token begin identifier string
+	 */
 	private String beginTokenString = "~!";
+	
+	/**
+	 * Replacement token end identifier string
+	 */
 	private String endTokenString = "!~";
-	private String pattern = "";
-	private Map<String, String> mapping;
+	
+	/**
+	 * Variablized template.
+	 */
+	private String templateString = "";
+	
+	/**
+	 * Map with template variable as key and org.apache.commons.beanutils.PropertyUtils property path as value.
+	 * This map will be processed before processing the template.
+	 */
+	private Map<String, String> inputObjectPropertyToTemplateVariableMapping;
 
 	public String getBeginTokenString()
 	{
@@ -43,36 +66,36 @@ public class SimpleFormatter implements IFormatter
 		this.endTokenString = endTokenString;
 	}
 
-	public String getPattern()
+	public String getTemplateString()
 	{
-		if (pattern == null || pattern.trim().length() == 0)
-			throw new SystemException("SimpleFormatter.pattern-empty", "Please set template pattern");
-		return pattern;
+		if (templateString == null || templateString.trim().length() == 0)
+			throw new SystemException("SimpleFormatter.templateString-empty", "Please set template templateString");
+		return templateString;
 	}
 
-	public void setPattern(String pattern)
+	public void setTemplateString(String templateString)
 	{
-		this.pattern = pattern;
+		this.templateString = templateString;
 	}
 
-	public Map<String, String> getMapping()
+	public Map<String, String> getInputObjectPropertyToTemplateVariableMapping()
 	{
-		if (mapping == null || mapping.size() == 0)
-			throw new SystemException("SimpleFormatter.mapping-empty",
-					"Please add a mapping from input object to template variables");
-		return mapping;
+		if (inputObjectPropertyToTemplateVariableMapping == null || inputObjectPropertyToTemplateVariableMapping.size() == 0)
+			throw new SystemException("SimpleFormatter.inputObjectPropertyToTemplateVariableMapping-empty",
+					"Please add a inputObjectPropertyToTemplateVariableMapping from input object to template variables");
+		return inputObjectPropertyToTemplateVariableMapping;
 	}
 
-	public void setMapping(Map<String, String> mapping)
+	public void setInputObjectPropertyToTemplateVariableMapping(Map<String, String> mapping)
 	{
-		this.mapping = mapping;
+		this.inputObjectPropertyToTemplateVariableMapping = mapping;
 	}
 
-	private Map<String, String> implementMappingOnObject(Object arg)
+	private Map<String, String> mapInputObjectToTemplateVariables(Object arg)
 			throws IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{
 		Map<String, String> mappedObject = new HashMap<String, String>();
-		for (Entry<String, String> entry : this.getMapping().entrySet())
+		for (Entry<String, String> entry : this.getInputObjectPropertyToTemplateVariableMapping().entrySet())
 		{
 			mappedObject.put(entry.getKey(), "" + PropertyUtils.getNestedProperty(arg, entry.getValue()));
 		}
@@ -83,26 +106,26 @@ public class SimpleFormatter implements IFormatter
 	{
 		logger.info("beginTokenString=" + getBeginTokenString());
 		logger.info("endTokenString=" + getEndTokenString());
-		logger.info("pattern=" + pattern);
+		logger.info("templateString=" + templateString);
 		logger.info("requestData=" + arg);
-		String formattedPattern = new String(pattern);
+		String formattedString = new String(templateString);
 
 		Map<String, String> newArg = null;
-		if (this.getMapping() != null && this.getMapping().size() > 0)
+		if (this.getInputObjectPropertyToTemplateVariableMapping() != null && this.getInputObjectPropertyToTemplateVariableMapping().size() > 0)
 		{
-			newArg = implementMappingOnObject(arg);
+			newArg = mapInputObjectToTemplateVariables(arg);
 
 			for (Entry<String, String> ent : newArg.entrySet())
 			{
 				if (ent.getValue() != null && ent.getKey() != null && ent.getKey() instanceof String)
 				{
-					formattedPattern = formattedPattern.replace(
+					formattedString = formattedString.replace(
 							this.getBeginTokenString() + ent.getKey() + this.getEndTokenString(), ent.getValue());
 				}
 			}
 		}
-		logger.info("formatted value=" + formattedPattern);
-		return formattedPattern;
+		logger.info("formatted value=" + formattedString);
+		return formattedString;
 	}
 
 }

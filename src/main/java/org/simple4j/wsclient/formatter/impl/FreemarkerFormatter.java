@@ -12,17 +12,28 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 /**
+ * This formatter implementation takes Freemarker template configuration and formats the inputObject by applying the template.
+ * 
  * @author jsrinivas108
  */
 public class FreemarkerFormatter implements IFormatter
 {
 	private static Logger logger = LoggerFactory.getLogger(FreemarkerFormatter.class);
 
+	/**
+	 * Instance of freemarker.template.Configuration to load freemarker template.
+	 */
 	private Configuration configuration = null;
 
+	/**
+	 * Name of the template to load
+	 */
 	private String templateName = null;
 
-	private String encoding = "UTF-8";
+	/**
+	 * Character encoding of the formatted string
+	 */
+	private String outputEncoding = "UTF-8";
 
 	public Configuration getConfiguration()
 	{
@@ -44,26 +55,26 @@ public class FreemarkerFormatter implements IFormatter
 		this.templateName = templateName;
 	}
 
-	public String getEncoding()
+	public String getOutputEncoding()
 	{
-		return encoding;
+		return outputEncoding;
 	}
 
-	public void setEncoding(String encoding)
+	public void setOutputEncoding(String outputEncoding)
 	{
-		this.encoding = encoding;
+		this.outputEncoding = outputEncoding;
 	}
 
 	@Override
-	public String formatData(Object arg) throws Exception
+	public String formatData(Object inputObject) throws Exception
 	{
 
 		Template temp = this.getConfiguration().getTemplate(this.getTemplateName());
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Writer out = new OutputStreamWriter(baos);
-		temp.process(arg, out);
-		return new String(baos.toByteArray(), this.getEncoding());
+		temp.process(inputObject, out);
+		return new String(baos.toByteArray(), this.getOutputEncoding());
 	}
 
 }

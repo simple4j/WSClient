@@ -78,7 +78,7 @@ public class MethodsTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2");
-		Map<String, Object> response = getCaller.serviceCall(reqObj);
+		Map<String, Object> response = getCaller.call(reqObj);
 		logger.info("response from call", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 		logger.info(responsevalue);
@@ -93,7 +93,7 @@ public class MethodsTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2.0");
-		Map<String, Object> response = postCaller.serviceCall(reqObj);
+		Map<String, Object> response = postCaller.call(reqObj);
 		logger.info("response from call", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("reqheadr2");
 		logger.info(responsevalue);
@@ -108,7 +108,7 @@ public class MethodsTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2.1");
-		Map<String, Object> response = putCaller.serviceCall(reqObj);
+		Map<String, Object> response = putCaller.call(reqObj);
 		logger.info("response from call", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("reqheadr2");
 		logger.info(responsevalue);
@@ -123,7 +123,7 @@ public class MethodsTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2");
-		Map<String, Object> response = deleteCaller.serviceCall(reqObj);
+		Map<String, Object> response = deleteCaller.call(reqObj);
 		logger.info("response from call", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 		logger.info(responsevalue);

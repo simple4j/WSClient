@@ -27,6 +27,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
+ * This implementation parses JSON string to Java Collections object tree.
+ * 
  * @author jsrinivas108
  */
 public class XMLParser implements IParser
@@ -36,12 +38,65 @@ public class XMLParser implements IParser
 
 	private ThreadLocal<Map<String, List<Node>>> xpathEvalCacheTL = new ThreadLocal<Map<String, List<Node>>>();
 
+	/**
+	 * This flag controls if the xml namespace prefix is retained or removed from the Map keys in the output.
+	 */
 	private boolean removePrefix = true;
 
+	/**
+	 * This java.util.List contains list of xpath expressions that can occur multiple times under the same parent node.
+	 * If this is not specified and a node happens to occur more than once, the parser automatically adds as a List.
+	 * If this is not specified and a node happens to occur only once, the parser will add it as a String.
+	 * 
+	 * For example:
+	 * <books>
+	 * 		<book>
+	 * 			<title></title>
+	 * 			<author></author>
+	 * 		<book>
+	 * 		<book>
+	 * 			<title></title>
+	 * 			<author></author>
+	 * 			<author></author>
+	 * 		<book>
+	 * </books>
+	 * 
+	 * If this list is empty, 
+	 * 		the first book will have non-List for author key and the second book will have List of authors.
+	 * 
+	 * If this list contains /books/book/author, 
+	 * 		the author key will always have List of authors with first book having List of size 1.
+	 */
 	private List<String> listElementXpaths = new ArrayList<String>();
 
+	/**
+	 * This java.util.List contains list of xpath expressions that identifies if the node can have attributes.
+	 * If this is not specified and a node happens to have attribute, the parser automatically adds as a Map.
+	 * If this is not specified and a node happens to not have any attribute, the parser will add it as a String.
+	 * 
+	 * For example:
+	 * <books>
+	 * 		<book>
+	 * 			<title></title>
+	 * 			<author></author>
+	 * 		<book>
+	 * 		<book>
+	 * 			<title></title>
+	 * 			<author title=""></author>
+	 * 		<book>
+	 * </books>
+	 * 
+	 * If this list is empty, 
+	 * 		the first book will have String for author key and the second book will have Map for author.
+	 * 
+	 * If this list contains /books/book/author, 
+	 * 		the author key will always have Map for author with key of the text node being configured value in textNodeKey property.
+	 */
 	private List<String> attributedElementXpaths = new ArrayList<String>();
 
+	/**
+	 * This is the name of the key for text node when the containing node has attributes.
+	 */
 	private String textNodeKey = "TEXT";
 
 	public boolean isRemovePrefix()

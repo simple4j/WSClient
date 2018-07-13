@@ -81,7 +81,7 @@ public class ConnectionConfigTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2");
-		Map<String, Object> response = getCaller.serviceCall(reqObj);
+		Map<String, Object> response = getCaller.call(reqObj);
 		logger.info("response from call", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 		logger.info(responsevalue);
@@ -98,7 +98,7 @@ public class ConnectionConfigTest
 		reqObj.put("testProperty2", "param2");
 		try
 		{
-			Map<String, Object> response = timeoutCaller.serviceCall(reqObj);
+			Map<String, Object> response = timeoutCaller.call(reqObj);
 			logger.info("response from call", response);
 			String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 			logger.info(responsevalue);

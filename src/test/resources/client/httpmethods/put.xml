@@ -39,9 +39,9 @@
 	</bean>
 
 	<bean id="putRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern"
+		<property name="templateString"
 			value="/simple4j/wsmock/httpmethods/put/~!URLPROP1!~"></property>
-		<property name="mapping">
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="URLPROP1" value="testProperty1" />
 			</map>
@@ -49,8 +49,8 @@
 	</bean>
 
 	<bean id="putRequestHeader1Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern" value="h1~!HPROP1!~"></property>
-		<property name="mapping">
+		<property name="templateString" value="h1~!HPROP1!~"></property>
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="HPROP1" value="testProperty1" />
 			</map>
@@ -58,8 +58,8 @@
 	</bean>
 
 	<bean id="putRequestHeader2Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern" value="~!HPROPx!~"></property>
-		<property name="mapping">
+		<property name="templateString" value="~!HPROPx!~"></property>
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="HPROPx" value="testProperty2" />
 			</map>
@@ -82,6 +82,6 @@
 	</bean>
 
 	<bean id="putRequestBodyFormatter" class="org.simple4j.wsclient.formatter.impl.VelocityFormatter">
-		<property name="template" value="/client/httpmethods/templates/put.vtl"></property>
+		<property name="templateName" value="/client/httpmethods/templates/put.vtl"></property>
 	</bean>
 </beans>

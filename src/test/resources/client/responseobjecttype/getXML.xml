@@ -43,9 +43,9 @@
 	</bean>
 
 	<bean id="getXMLRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern"
+		<property name="templateString"
 			value="/simple4j/wsmock/responseobjecttype/getXML/~!URLPROP1!~"></property>
-		<property name="mapping">
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="URLPROP1" value="testProperty1" />
 			</map>
@@ -53,8 +53,8 @@
 	</bean>
 
 	<bean id="getXMLRequestHeader1Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern" value="h1~!HPROP1!~"></property>
-		<property name="mapping">
+		<property name="templateString" value="h1~!HPROP1!~"></property>
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="HPROP1" value="testProperty1" />
 			</map>
@@ -62,8 +62,8 @@
 	</bean>
 
 	<bean id="getXMLRequestHeader2Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern" value="h2~!HPROPx!~"></property>
-		<property name="mapping">
+		<property name="templateString" value="h2~!HPROPx!~"></property>
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="HPROPx" value="testProperty2" />
 			</map>

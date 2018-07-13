@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
+ * This implementation parses JSON string to Java Collections object tree.
+ * 
  * @author jsrinivas108
  */
 public class JSONParser implements IParser

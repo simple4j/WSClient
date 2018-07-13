@@ -25,6 +25,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the entry point class for client program to make Web Service calls.
+ * 
+ * @see subclasses of IFormatter - this is used to generate URL, RequestHeader and RequestBody using templating.
+ * @see HTTPWSClient - this is the HTTP connection manager. Server host, port, http/https, timeouts are configured using this.
+ * @see subclasses of IParser - this is used to parse the ResponseBody to java collections object tree
  * @author jsrinivas108
  */
 public class Caller
@@ -261,11 +266,14 @@ public class Caller
 	}
 
 	/**
-	 * A new entry method that could be used for invoking the Caller class This
-	 * method provides support for utilizing the Formatter, Parser and Mapper
-	 * interfaces
+	 * This is the entry method to invoke the configured Web Service call.
+	 * Refer other configuration properties for more details of how each of them are used in the processing.
+	 * 
+	 * @param requestObject - Will be used in the formatters for URL, RequestHeaders and RequestBody.
+	 * 							The specific usage is defined in their corresponding template.
+	 * @return - Map of return values. The keys of each of the object can be configured through Caller properties.
 	 */
-	public Map<String, Object> serviceCall(Object requestObject)
+	public Map<String, Object> call(Object requestObject)
 	{
 		try
 		{

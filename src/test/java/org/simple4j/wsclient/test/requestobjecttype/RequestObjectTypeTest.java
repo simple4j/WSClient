@@ -83,7 +83,7 @@ public class RequestObjectTypeTest
 		Product product = new Product();
 		product.setProductDescription("This is a sample test product");
 		product.setProductId(12345);
-		Map<String, Object> response = simpleCaller.serviceCall(product);
+		Map<String, Object> response = simpleCaller.call(product);
 		logger.info("response from call", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 		logger.info(responsevalue);
@@ -101,7 +101,7 @@ public class RequestObjectTypeTest
 		SalesPerson sp = getRandomSalesPerson();
 
 		logger.info("calling with param {}", sp);
-		Map<String, Object> response = complexCaller.serviceCall(sp);
+		Map<String, Object> response = complexCaller.call(sp);
 		logger.info("response from call {}", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 		logger.info(responsevalue);
@@ -168,7 +168,7 @@ public class RequestObjectTypeTest
 		Map sp = getRandomSalesPersonMap();
 
 		logger.info("calling with param {}", sp);
-		Map<String, Object> response = complexCaller.serviceCall(sp);
+		Map<String, Object> response = complexCaller.call(sp);
 		logger.info("response from call {}", response);
 		String responsevalue = ((Map<String, String>) response.get("HTTP_RESPONSE_OBJECT")).get("responsevalue");
 		logger.info(responsevalue);

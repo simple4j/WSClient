@@ -44,8 +44,8 @@
 	</bean>
 
 	<bean id="complexRequestHeader1Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern" value="h1~!HPROP1!~"></property>
-		<property name="mapping">
+		<property name="templateString" value="h1~!HPROP1!~"></property>
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="HPROP1" value="salesPersonId" />
 			</map>

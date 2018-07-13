@@ -34,9 +34,9 @@
 	</bean>
 
 	<bean id="deleteRequestURLFormatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern"
+		<property name="templateString"
 			value="/simple4j/wsmock/httpmethods/delete/~!URLPROP1!~"></property>
-		<property name="mapping">
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="URLPROP1" value="testProperty1" />
 			</map>
@@ -44,8 +44,8 @@
 	</bean>
 
 	<bean id="deleteRequestHeader1Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern" value="h1~!HPROP1!~"></property>
-		<property name="mapping">
+		<property name="templateString" value="h1~!HPROP1!~"></property>
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="HPROP1" value="testProperty1" />
 			</map>
@@ -53,8 +53,8 @@
 	</bean>
 
 	<bean id="deleteRequestHeader2Formatter" class="org.simple4j.wsclient.formatter.impl.SimpleFormatter">
-		<property name="pattern" value="h2~!HPROPx!~"></property>
-		<property name="mapping">
+		<property name="templateString" value="h2~!HPROPx!~"></property>
+		<property name="inputObjectPropertyToTemplateVariableMapping">
 			<map>
 				<entry key="HPROPx" value="testProperty2" />
 			</map>

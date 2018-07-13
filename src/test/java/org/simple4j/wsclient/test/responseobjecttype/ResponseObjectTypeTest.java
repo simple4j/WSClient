@@ -76,7 +76,7 @@ public class ResponseObjectTypeTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "S-" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2");
-		Map<String, Object> response = getJSONCaller.serviceCall(reqObj);
+		Map<String, Object> response = getJSONCaller.call(reqObj);
 		logger.info("response from call {}", response);
 		assertResponse(reqObj, response);
 	}
@@ -88,7 +88,7 @@ public class ResponseObjectTypeTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "S-" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2");
-		Map<String, Object> response = getXMLCaller.serviceCall(reqObj);
+		Map<String, Object> response = getXMLCaller.call(reqObj);
 		logger.info("response from call {}", response);
 		assertResponse(reqObj, response);
 	}
@@ -119,7 +119,7 @@ public class ResponseObjectTypeTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "S-" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2");
-		Map<String, Object> response = getXMLCaller.serviceCall(reqObj);
+		Map<String, Object> response = getXMLCaller.call(reqObj);
 		logger.info("response from call {}", response);
 		List<String> expectedResult = new ArrayList<String>();
 		expectedResult.add("http://www.springframework.org/schema/context");
@@ -133,7 +133,7 @@ public class ResponseObjectTypeTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "S-" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2");
-		Map<String, Object> response = getXMLCaller.serviceCall(reqObj);
+		Map<String, Object> response = getXMLCaller.call(reqObj);
 		logger.info("response from call {}", response);
 		List<String> expectedResult = new ArrayList<String>();
 		expectedResult.add("sampleText");
@@ -147,7 +147,7 @@ public class ResponseObjectTypeTest
 		HashMap<String, String> reqObj = new HashMap<String, String>();
 		reqObj.put("testProperty1", "E-" + System.currentTimeMillis());
 		reqObj.put("testProperty2", "param2");
-		Map<String, Object> response = getXMLCaller.serviceCall(reqObj);
+		Map<String, Object> response = getXMLCaller.call(reqObj);
 		logger.info("response from call {}", response);
 		assertEquals("call HTTP status code does not match", "412", response.get("HTTP_STATUS_CODE"));
 

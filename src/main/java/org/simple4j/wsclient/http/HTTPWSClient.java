@@ -19,6 +19,11 @@ import javax.net.ssl.SSLException;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
+import org.apache.http.client.AuthenticationStrategy;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.ResponseHandler;
@@ -37,6 +42,9 @@ import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -48,6 +56,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the HTTP connection manager.
+ * Server host, port, http/https, keystore/truststore, SSL protocol, proxy timeouts are configured using this class.
+ * 
  * @author jsrinivas108
  */
 public class HTTPWSClient
@@ -137,6 +148,19 @@ public class HTTPWSClient
 			if (this.getProxyHostName() != null && this.getProxyPortNumber() != -1)
 			{
 				hCBuilder.setProxy(new HttpHost(this.getProxyHostName(), this.getProxyPortNumber()));
+
+//TODO : implement proxy authentication
+//				HttpHost targetHost = new HttpHost("localhost", 80, "http");
+//				CredentialsProvider credsProvider = new BasicCredentialsProvider();
+//				credsProvider.setCredentials(
+//				        new AuthScope(this.getProxyHostName(), this.getProxyPortNumber()),
+//				        new UsernamePasswordCredentials("username", "password"));
+//				AuthCache authCache = new BasicAuthCache();
+//				// Generate BASIC scheme object and add it to the local auth cache
+//				BasicScheme basicAuth = new BasicScheme();
+//				authCache.put(targetHost, basicAuth);
+//				
+//				hCBuilder.setDefaultCredentialsProvider(credentialsProvider);
 			}
 
 			CloseableHttpClient httpClient = hCBuilder.setRetryHandler(new HttpRequestRetryHandler()
