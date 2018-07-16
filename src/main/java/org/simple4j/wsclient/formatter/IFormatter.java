@@ -12,8 +12,8 @@ public interface IFormatter
 	/**
 	 * This method uses some templating mechanism to format the inputObject to a String
 	 *  
-	 * @param inputObject
-	 * @return
+	 * @param inputObject - any imput object from the client that needs to be formatted to return String
+	 * @return - formatted value from inputObject as String
 	 * @throws Exception
 	 */
 	public String formatData(Object inputObject) throws Exception;

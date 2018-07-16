@@ -27,9 +27,9 @@ import org.slf4j.LoggerFactory;
 /**
  * This is the entry point class for client program to make Web Service calls.
  * 
- * @see subclasses of IFormatter - this is used to generate URL, RequestHeader and RequestBody using templating.
- * @see HTTPWSClient - this is the HTTP connection manager. Server host, port, http/https, timeouts are configured using this.
- * @see subclasses of IParser - this is used to parse the ResponseBody to java collections object tree
+ * @see org.simple4j.wsclient.formatter.IFormatter and its subclasses - this is used to generate URL, RequestHeader and RequestBody using templating.
+ * @see org.simple4j.wsclient.http.HTTPWSClient - this is the HTTP connection manager. Server host, port, http/https, timeouts are configured using this.
+ * @see org.simple4j.wsclient.parser.IParser and its subclasses - this is used to parse the ResponseBody to java collections object tree
  * @author jsrinivas108
  */
 public class Caller
