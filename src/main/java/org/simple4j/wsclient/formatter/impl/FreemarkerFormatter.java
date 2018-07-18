@@ -12,7 +12,8 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 /**
- * This formatter implementation takes Freemarker template configuration and formats the inputObject by applying the template.
+ * This formatter implementation takes Freemarker template configuration and
+ * formats the inputObject by applying the template.
  * 
  * @author jsrinivas108
  */

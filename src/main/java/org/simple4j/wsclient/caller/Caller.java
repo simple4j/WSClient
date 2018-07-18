@@ -27,9 +27,13 @@ import org.slf4j.LoggerFactory;
 /**
  * This is the entry point class for client program to make Web Service calls.
  * 
- * @see org.simple4j.wsclient.formatter.IFormatter and its subclasses - this is used to generate URL, RequestHeader and RequestBody using templating.
- * @see org.simple4j.wsclient.http.HTTPWSClient - this is the HTTP connection manager. Server host, port, http/https, timeouts are configured using this.
- * @see org.simple4j.wsclient.parser.IParser and its subclasses - this is used to parse the ResponseBody to java collections object tree
+ * @see org.simple4j.wsclient.formatter.IFormatter and its subclasses - this is
+ *      used to generate URL, RequestHeader and RequestBody using templating.
+ * @see org.simple4j.wsclient.http.HTTPWSClient - this is the HTTP connection
+ *      manager. Server host, port, http/https, timeouts are configured using
+ *      this.
+ * @see org.simple4j.wsclient.parser.IParser and its subclasses - this is used
+ *      to parse the ResponseBody to java collections object tree
  * @author jsrinivas108
  */
 public class Caller
@@ -266,12 +270,16 @@ public class Caller
 	}
 
 	/**
-	 * This is the entry method to invoke the configured Web Service call.
-	 * Refer other configuration properties for more details of how each of them are used in the processing.
+	 * This is the entry method to invoke the configured Web Service call. Refer
+	 * other configuration properties for more details of how each of them are used
+	 * in the processing.
 	 * 
-	 * @param requestObject - Will be used in the formatters for URL, RequestHeaders and RequestBody.
-	 * 							The specific usage is defined in their corresponding template.
-	 * @return - Map of return values. The keys of each of the object can be configured through Caller properties.
+	 * @param requestObject
+	 *            - Will be used in the formatters for URL, RequestHeaders and
+	 *            RequestBody. The specific usage is defined in their corresponding
+	 *            template.
+	 * @return - Map of return values. The keys of each of the object can be
+	 *         configured through Caller properties.
 	 */
 	public Map<String, Object> call(Object requestObject)
 	{

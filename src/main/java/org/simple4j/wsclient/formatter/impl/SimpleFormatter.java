@@ -12,9 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This implementation of IFormatter is to do simple find and replace formatting.
- * It first extracts key value pairs based on path navigation using org.apache.commons.beanutils.PropertyUtils
- * and applies the keys to the template.
+ * This implementation of IFormatter is to do simple find and replace
+ * formatting. It first extracts key value pairs based on path navigation using
+ * org.apache.commons.beanutils.PropertyUtils and applies the keys to the
+ * template.
  * 
  * It has limitations on 1-n relationships and deep object hierarchy navigation.
  * 
@@ -24,25 +25,26 @@ public class SimpleFormatter implements IFormatter
 {
 
 	private static Logger logger = LoggerFactory.getLogger(SimpleFormatter.class);
-	
+
 	/**
 	 * Replacement token begin identifier string
 	 */
 	private String beginTokenString = "~!";
-	
+
 	/**
 	 * Replacement token end identifier string
 	 */
 	private String endTokenString = "!~";
-	
+
 	/**
 	 * Variablized template.
 	 */
 	private String templateString = "";
-	
+
 	/**
-	 * Map with template variable as key and org.apache.commons.beanutils.PropertyUtils property path as value.
-	 * This map will be processed before processing the template.
+	 * Map with template variable as key and
+	 * org.apache.commons.beanutils.PropertyUtils property path as value. This map
+	 * will be processed before processing the template.
 	 */
 	private Map<String, String> inputObjectPropertyToTemplateVariableMapping;
 
@@ -80,7 +82,8 @@ public class SimpleFormatter implements IFormatter
 
 	public Map<String, String> getInputObjectPropertyToTemplateVariableMapping()
 	{
-		if (inputObjectPropertyToTemplateVariableMapping == null || inputObjectPropertyToTemplateVariableMapping.size() == 0)
+		if (inputObjectPropertyToTemplateVariableMapping == null
+				|| inputObjectPropertyToTemplateVariableMapping.size() == 0)
 			throw new SystemException("SimpleFormatter.inputObjectPropertyToTemplateVariableMapping-empty",
 					"Please add a inputObjectPropertyToTemplateVariableMapping from input object to template variables");
 		return inputObjectPropertyToTemplateVariableMapping;
@@ -111,7 +114,8 @@ public class SimpleFormatter implements IFormatter
 		String formattedString = new String(templateString);
 
 		Map<String, String> newArg = null;
-		if (this.getInputObjectPropertyToTemplateVariableMapping() != null && this.getInputObjectPropertyToTemplateVariableMapping().size() > 0)
+		if (this.getInputObjectPropertyToTemplateVariableMapping() != null
+				&& this.getInputObjectPropertyToTemplateVariableMapping().size() > 0)
 		{
 			newArg = mapInputObjectToTemplateVariables(arg);
 

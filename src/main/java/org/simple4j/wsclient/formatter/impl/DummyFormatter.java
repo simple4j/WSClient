@@ -5,7 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is an implementation were the inputObject is ignored and a static value is always returned
+ * This is an implementation were the inputObject is ignored and a static value
+ * is always returned
  * 
  * @author jsrinivas108
  */

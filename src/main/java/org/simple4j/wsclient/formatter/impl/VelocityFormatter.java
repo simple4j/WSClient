@@ -15,21 +15,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This IFormatter implementation uses org.apache.velocity templateName to format String.
- *  
+ * This IFormatter implementation uses org.apache.velocity templateName to
+ * format String.
+ * 
  * @author jsrinivas108
  */
 public class VelocityFormatter implements IFormatter
 {
 
 	private static Logger logger = LoggerFactory.getLogger(VelocityFormatter.class);
-	
+
 	/**
-	 * Instance of org.apache.velocity.app.VelocityEngine to load templateName.
-	 * This field is optional and default instance will load templateName from classpath
+	 * Instance of org.apache.velocity.app.VelocityEngine to load templateName. This
+	 * field is optional and default instance will load templateName from classpath
 	 */
 	private VelocityEngine velocityEngine;
-	
+
 	/**
 	 * Name of the template to load
 	 */
@@ -39,7 +40,7 @@ public class VelocityFormatter implements IFormatter
 	 * Character encoding used for the formatting
 	 */
 	private String encoding = "UTF-8";
-	
+
 	/**
 	 * Name of the input object field name in the template
 	 */

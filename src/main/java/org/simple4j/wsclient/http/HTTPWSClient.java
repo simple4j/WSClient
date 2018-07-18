@@ -56,8 +56,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is the HTTP connection manager.
- * Server host, port, http/https, keystore/truststore, SSL protocol, proxy timeouts are configured using this class.
+ * This is the HTTP connection manager. Server host, port, http/https,
+ * keystore/truststore, SSL protocol, proxy timeouts are configured using this
+ * class.
  * 
  * @author jsrinivas108
  */
@@ -149,18 +150,18 @@ public class HTTPWSClient
 			{
 				hCBuilder.setProxy(new HttpHost(this.getProxyHostName(), this.getProxyPortNumber()));
 
-//TODO : implement proxy authentication
-//				HttpHost targetHost = new HttpHost("localhost", 80, "http");
-//				CredentialsProvider credsProvider = new BasicCredentialsProvider();
-//				credsProvider.setCredentials(
-//				        new AuthScope(this.getProxyHostName(), this.getProxyPortNumber()),
-//				        new UsernamePasswordCredentials("username", "password"));
-//				AuthCache authCache = new BasicAuthCache();
-//				// Generate BASIC scheme object and add it to the local auth cache
-//				BasicScheme basicAuth = new BasicScheme();
-//				authCache.put(targetHost, basicAuth);
-//				
-//				hCBuilder.setDefaultCredentialsProvider(credentialsProvider);
+				// TODO : implement proxy authentication
+				// HttpHost targetHost = new HttpHost("localhost", 80, "http");
+				// CredentialsProvider credsProvider = new BasicCredentialsProvider();
+				// credsProvider.setCredentials(
+				// new AuthScope(this.getProxyHostName(), this.getProxyPortNumber()),
+				// new UsernamePasswordCredentials("username", "password"));
+				// AuthCache authCache = new BasicAuthCache();
+				// // Generate BASIC scheme object and add it to the local auth cache
+				// BasicScheme basicAuth = new BasicScheme();
+				// authCache.put(targetHost, basicAuth);
+				//
+				// hCBuilder.setDefaultCredentialsProvider(credentialsProvider);
 			}
 
 			CloseableHttpClient httpClient = hCBuilder.setRetryHandler(new HttpRequestRetryHandler()
