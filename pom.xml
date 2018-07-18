@@ -27,6 +27,16 @@
 		<developerConnection>scm:git:ssh://github.com:simple4j/WSClient.git</developerConnection>
 		<url>https://github.com/simple4j/WSClient/tree/master</url>
 	</scm>
+<distributionManagement>
+  <snapshotRepository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+  </snapshotRepository>
+  <repository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+  </repository>
+</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
@@ -131,27 +141,10 @@
 		</dependency>
 
 	</dependencies>
-	<build>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-				<excludes>
-					<exclude>**/*.jks</exclude>
-					<exclude>**/*.cer</exclude>
-					<exclude>**/*.csr</exclude>
-				</excludes>
-				<filtering>true</filtering>
-			</testResource>
-			<testResource>
-				<directory>src/test/resources</directory>
-				<includes>
-					<include>**/*.jks</include>
-					<include>**/*.cer</include>
-					<include>**/*.csr</include>
-				</includes>
-				<filtering>false</filtering>
-			</testResource>
-		</testResources>
+	<profiles>
+	<profile>
+	<id>release</id>
+    <build>
   <plugins>
    <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -184,15 +177,58 @@
     <artifactId>maven-gpg-plugin</artifactId>
     <version>1.5</version>
     <executions>
-<!--      <execution>
+      <execution>
       <id>sign-artifacts</id>
       <phase>verify</phase>
       <goals>
        <goal>sign</goal>
       </goals>
+             <configuration>
+                <gpgArguments>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                </gpgArguments>
+            </configuration>
      </execution>
- -->    </executions>
+    </executions>
    </plugin>
+   </plugins>
+    </build>
+	</profile>
+	</profiles>
+	<build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<excludes>
+					<exclude>**/*.jks</exclude>
+					<exclude>**/*.cer</exclude>
+					<exclude>**/*.csr</exclude>
+				</excludes>
+				<filtering>true</filtering>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<includes>
+					<include>**/*.jks</include>
+					<include>**/*.cer</include>
+					<include>**/*.csr</include>
+				</includes>
+				<filtering>false</filtering>
+			</testResource>
+		</testResources>
+		<plugins>
+<plugin>
+      <groupId>org.sonatype.plugins</groupId>
+      <artifactId>nexus-staging-maven-plugin</artifactId>
+      <version>1.6.7</version>
+      <extensions>true</extensions>
+      <configuration>
+        <serverId>ossrh</serverId>
+        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+      </configuration>
+    </plugin>
   </plugins>		
 	</build>
 	<description>
