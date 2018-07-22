@@ -1,3 +1,6 @@
+/**
+ * Defines the exception and related classes.
+ */
 package org.simple4j.wsclient.exception;
 
 import java.io.PrintStream;

@@ -1,3 +1,6 @@
+/**
+ * Contains lower level HTTP connection related classes.
+ */
 package org.simple4j.wsclient.http;
 
 import java.io.FileInputStream;
@@ -58,7 +61,8 @@ import org.slf4j.LoggerFactory;
 /**
  * This is the HTTP connection manager. Server host, port, http/https,
  * keystore/truststore, SSL protocol, proxy timeouts are configured using this
- * class.
+ * class. Instance of this class can be injected to multiple org.simple4j.wsclient.caller.Caller.
+ * This represents a connector to a particular Web Service Server ie. http(s)://&lt;hostname&gt;:&lt;port&gt;/ part of the endpoint.
  * 
  * @author jsrinivas108
  */

@@ -1,3 +1,6 @@
+/**
+ * Contains any additional utility classes that the framework uses.
+ */
 package org.simple4j.wsclient.util;
 
 import java.util.ArrayList;
@@ -10,6 +13,240 @@ import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * CollectionsPathRetriever can take a Java Collections based object tree, nested property path and 
+ * returns java.util.List of objects that match the nested property path.
+ * The return value is a List because the nested property path supports wild cards.
+ * 
+ * For example, let us consider below Java Colleections base object tree of a sales person (may be parsed from XML or JSON response)
+ * 
+ * {	//Sales person object Map with salesPersonId and a List of orders
+ * 	salesPersonId=sp-dd872619-7cf2-4bc1-b595-7434d09a4799,
+ * 	orders=
+ * 	[	//List of orders
+ * 		{	//First order object Map with orderId, orderDate, orderItems
+ * 			orderId=oifd5b0b84-cece-4d65-a7fb-1bf079ae7abd,
+ * 			orderDate=Wed Jul 18 18:25:42 EDT 2018,
+ * 			orderItems=
+ * 			{	//orderItems is a Map instead of List because 
+ * 				//		the key for the orderItems is product to make sure duplicate orderItems for the same product does not exist and 
+ * 				//		the value is quantity, orderItemId representing DB key and status
+ * 				{
+ * 					productId=15612,
+ * 					productDescription=This is a sample test product:15612
+ * 				}
+ * 				=
+ * 				{
+ * 					quantity=0,
+ * 					orderItemId=oii30a00dfc-89d0-4747-a9c8-ab7dee630480,
+ * 					status=ois69b76f1d-92c6-403f-8f44-60c466047417
+ * 				}
+ * 				,
+ * 				{
+ * 					productId=3489,
+ * 					productDescription=This is a sample test product:3489
+ * 				}
+ * 				=
+ * 				{
+ * 					quantity=9,
+ * 					orderItemId=oiidebe95c3-6b38-4988-94a9-a4481d56ea5b,
+ * 					status=oisd027f2df-8a59-4616-9237-02de812694ac
+ * 				}
+ * 			}
+ * 		}
+ * 		,
+ * 		{	//Second order same structure as first order
+ * 			orderId=oi26a18bd9-9557-4497-bb26-77a7fe124f60,
+ * 			orderDate=Wed Jul 18 18:25:42 EDT 2018,
+ * 			orderItems=
+ * 			{
+ * 				{
+ * 					productId=44136,
+ * 					productDescription=This is a sample test product:44136
+ * 				}
+ * 				=
+ * 				{
+ * 					quantity=6,
+ * 					orderItemId=oiiac12bb0f-d640-491d-a4d6-d90e025ccc42,
+ * 					status=oisf9a69127-fa29-459e-9913-0f994e1a6d90
+ * 				}
+ * 				,
+ * 				{
+ * 					productId=3894,
+ * 					productDescription=This is a sample test product:3894
+ * 				}
+ * 				=
+ * 				{
+ * 					quantity=2,
+ * 					orderItemId=oii25be8b51-c213-4866-b6e9-cc79bf103de0,
+ * 					status=oisfcf0e776-87dd-4e20-8563-cbc2170f00fd
+ * 				}
+ * 			}
+ * 		}
+ * 	]
+ * }
+ * 
+ * 
+ * nested property path of "salesPersonId" will return below results
+ * [sp-dd872619-7cf2-4bc1-b595-7434d09a4799]
+ * 
+ * 
+ * nested property path of "salesPersonId1" will return below results
+ * []
+ * 
+ * 
+ * nested property path of "orders" (same result for order[*]) will return below results
+ * [
+ * 	{
+ * 		orderId=oifd5b0b84-cece-4d65-a7fb-1bf079ae7abd, 
+ * 		orderDate=Wed Jul 18 18:25:42 EDT 2018, 
+ * 		orderItems=
+ * 		{
+ * 			{
+ * 				productId=15612, 
+ * 				productDescription=This is a sample test product:15612
+ * 			}
+ * 			=
+ * 			{
+ * 				quantity=0, 
+ * 				orderItemId=oii30a00dfc-89d0-4747-a9c8-ab7dee630480, 
+ * 				status=ois69b76f1d-92c6-403f-8f44-60c466047417
+ * 			}, 
+ * 			{
+ * 				productId=3489, 
+ * 				productDescription=This is a sample test product:3489
+ * 			}
+ * 			=
+ * 			{
+ * 				quantity=9, 
+ * 				orderItemId=oiidebe95c3-6b38-4988-94a9-a4481d56ea5b, 
+ * 				status=oisd027f2df-8a59-4616-9237-02de812694ac
+ * 			}
+ * 		}
+ * 	}, 
+ * 	{
+ * 		orderId=oi26a18bd9-9557-4497-bb26-77a7fe124f60, 
+ * 		orderDate=Wed Jul 18 18:25:42 EDT 2018, 
+ * 		orderItems=
+ * 		{
+ * 			{
+ * 				productId=44136, 
+ * 				productDescription=This is a sample test product:44136
+ * 			}
+ * 			=
+ * 			{
+ * 				quantity=6, 
+ * 				orderItemId=oiiac12bb0f-d640-491d-a4d6-d90e025ccc42, 
+ * 				status=oisf9a69127-fa29-459e-9913-0f994e1a6d90
+ * 			}, 
+ * 			{
+ * 				productId=3894, 
+ * 				productDescription=This is a sample test product:3894
+ * 			}
+ * 			=
+ * 			{
+ * 				quantity=2, 
+ * 				orderItemId=oii25be8b51-c213-4866-b6e9-cc79bf103de0, 
+ * 				status=oisfcf0e776-87dd-4e20-8563-cbc2170f00fd
+ * 			}
+ * 		}
+ * 	}
+ * ]
+ * 
+ * 
+ * nested property path of "orders[0]" will return below results
+ * [
+ * 	{
+ * 		orderId=oifd5b0b84-cece-4d65-a7fb-1bf079ae7abd, 
+ * 		orderDate=Wed Jul 18 18:25:42 EDT 2018, 
+ * 		orderItems=
+ * 		{
+ * 			{
+ * 				productId=15612, 
+ * 				productDescription=This is a sample test product:15612
+ * 			}
+ * 			=
+ * 			{
+ * 				quantity=0, 
+ * 				orderItemId=oii30a00dfc-89d0-4747-a9c8-ab7dee630480, 
+ * 				status=ois69b76f1d-92c6-403f-8f44-60c466047417
+ * 			}, 
+ * 			{
+ * 				productId=3489, 
+ * 				productDescription=This is a sample test product:3489
+ * 			}
+ * 			=
+ * 			{
+ * 				quantity=9, 
+ * 				orderItemId=oiidebe95c3-6b38-4988-94a9-a4481d56ea5b, 
+ * 				status=oisd027f2df-8a59-4616-9237-02de812694ac
+ * 			}
+ * 		}
+ * 	}
+ * ]
+ * 
+ * 
+ * nested property path of "orders[0].orderItems" will return below results
+ * [
+ * 	{
+ * 		{
+ * 			productId=15612,
+ * 			productDescription=This is a sample test product:15612
+ * 		}
+ * 		=
+ * 		{
+ * 			quantity=0,
+ * 			orderItemId=oii30a00dfc-89d0-4747-a9c8-ab7dee630480,
+ * 			status=ois69b76f1d-92c6-403f-8f44-60c466047417
+ * 		}
+ * 		,
+ * 		{
+ * 			productId=3489,
+ * 			productDescription=This is a sample test product:3489
+ * 		}
+ * 		=
+ * 		{
+ * 			quantity=9,
+ * 			orderItemId=oiidebe95c3-6b38-4988-94a9-a4481d56ea5b,
+ * 			status=oisd027f2df-8a59-4616-9237-02de812694ac
+ * 		}
+ * 	}
+ * ]
+ * 
+ * 
+ * nested property path of "orders[0].orderItems.KEYS" will return below results
+ * [
+ * 	{
+ * 		productId=15612,
+ * 		productDescription=This is a sample test product:15612
+ * 	}
+ * 	,
+ * 	{
+ * 		productId=3489,
+ * 		productDescription=This is a sample test product:3489
+ * 	}
+ * ]
+ * 
+ * 
+ * nested property path of "orders[0].orderItems.KEYS[LENGTH]" will return below results
+ * [2]
+ * 
+ * 
+ * nested property path of "orders[0].orderItems.KEYS[0]" will return below results
+ * [{productId=15612, productDescription=This is a sample test product:15612}]
+ * 
+ * 
+ * nested property path of "orders[0].orderItems.KEYS[1].productId" will return below results
+ * [3489]
+ * 
+ * 
+ * nested property path of "orders[LENGTH]" will return below results
+ * [2]
+ * 
+ * 
+ * @author jsrinivas108
+ *
+ */
 public class CollectionsPathRetreiver
 {
 

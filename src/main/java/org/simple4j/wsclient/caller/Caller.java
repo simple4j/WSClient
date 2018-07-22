@@ -1,3 +1,6 @@
+/**
+ * This package is to define the entry point for the client program
+ */
 package org.simple4j.wsclient.caller;
 
 import java.lang.reflect.Array;
@@ -26,6 +29,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This is the entry point class for client program to make Web Service calls.
+ * It represents one endpoint which is the URL path (excluding the protocol, hostname and port) and HTTP method.
+ * One instance need to be configured for each URL path and HTTP method.
+ * The protocol, hostname and port will be part of org.simple4j.wsclient.http.HTTPWSClient instance injected.
  * 
  * @see org.simple4j.wsclient.formatter.IFormatter and its subclasses - this is
  *      used to generate URL, RequestHeader and RequestBody using templating.

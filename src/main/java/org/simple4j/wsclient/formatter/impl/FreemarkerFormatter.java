@@ -1,6 +1,7 @@
 package org.simple4j.wsclient.formatter.impl;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
@@ -8,8 +9,12 @@ import org.simple4j.wsclient.formatter.IFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import freemarker.core.ParseException;
 import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 /**
  * This formatter implementation takes Freemarker template configuration and
@@ -67,7 +72,8 @@ public class FreemarkerFormatter implements IFormatter
 	}
 
 	@Override
-	public String formatData(Object inputObject) throws Exception
+	public String formatData(Object inputObject) throws TemplateNotFoundException, MalformedTemplateNameException, 
+														ParseException, IOException, TemplateException
 	{
 
 		Template temp = this.getConfiguration().getTemplate(this.getTemplateName());

@@ -21,6 +21,7 @@ public class CollectionsPathRetreiverTest
 	public void testGetJSON()
 	{
 		Map randomSalesPersonMap = getRandomSalesPersonMap();
+		System.out.println(randomSalesPersonMap);
 		CollectionsPathRetreiver cpr = new CollectionsPathRetreiver();
 		// TODO: verified manually but will have to switch to assertions.
 		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "salesPersonId"));

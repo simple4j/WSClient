@@ -1,3 +1,6 @@
+/**
+ * Contains request side formatting of data to request components
+ */
 package org.simple4j.wsclient.formatter;
 
 /**
@@ -17,7 +20,7 @@ public interface IFormatter
 	 *            - any imput object from the client that needs to be formatted to
 	 *            return String
 	 * @return - formatted value from inputObject as String
-	 * @throws Exception
+	 * @throws Exception - any exception specific to each implementation
 	 */
 	public String formatData(Object inputObject) throws Exception;
 

@@ -1,3 +1,6 @@
+/**
+ * Contains response side parsers of data from HTTP response body
+ */
 package org.simple4j.wsclient.parser;
 
 import java.util.Map;
