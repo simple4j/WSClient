@@ -18,5 +18,5 @@ Sample code showing how to configure and use various capabilities of the framewo
 Test cases from simple to complex case.
 * ConnectionConfigTest
 * MethodsTest
-* RrequestObjectTypeTest
+* RequestObjectTypeTest
 * ResponseObjectTypeTest
