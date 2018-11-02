@@ -22,3 +22,4 @@ Test cases from simple to complex case.
 * ResponseObjectTypeTest
 
 We strongly believe that the binary and configuration should be physically separate after application deployment. The configuration files should be kept a plain file structure for easy manual updates and not be bundled in an archive. This gives tremendous flexibility to modify application behaviour just by doing simpler configuration changes.
+Because of the above belief, this project is and will be free of Spring annotations. This also removes strong widespread dependency on Spring framework.
