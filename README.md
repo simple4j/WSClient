@@ -2,7 +2,7 @@
 
 Simple4j WSClient is a generic web service client that can be used for all types of data exchanges (XML, JSON, SOAP, REST and more) over both http and https protocols.
 Many of the data marshallers and parsers adds heavier dependency between client and server components for stricter type.
-This can result in tight coupling of web services and its client defeating the purpose of the creation of web service technology.
+This can result in tight coupling of web services and its client, defeating the purpose of the creation of web service technology.
 
 WSClient focuses on loose coupling by using templating on the request marshaling side opening up the possibility to even any non-standard format. On the response side, it uses generic parsing of XML and JSON to nested Java Collections object tree. It also support custom parsing of any non-standard response formats other than XML and JSON.
 This flexible and configurable design allows easy adaptability and maintainability of client application without making any code change even if the interface changes on the server side.
@@ -20,3 +20,5 @@ Test cases from simple to complex case.
 * MethodsTest
 * RequestObjectTypeTest
 * ResponseObjectTypeTest
+
+We strongly believe that the binary and configuration should be physically separate after application deployment. The configuration files should be kept a plain file structure for easy manual updates and not be bundled in an archive. This gives tremendous flexibility to modify application behaviour just by doing simpler configuration changes.
