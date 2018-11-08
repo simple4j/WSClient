@@ -25,7 +25,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/simple4j/WSClient.git</connection>
 		<developerConnection>scm:git:ssh://github.com:simple4j/WSClient.git</developerConnection>
-		<url>https://github.com/simple4j/WSClient/tree/master</url>
+		<url>https://github.com/simple4j/WSClient.git</url>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
