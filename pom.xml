@@ -23,9 +23,9 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:git://github.com/simple4j/WSClient.git</connection>
-		<developerConnection>scm:git:git://github.com/simple4j/WSClient.git</developerConnection>
-		<url>https://github.com/simple4j/WSClient.git</url>
+		<connection>scm:git:https://github.com/simple4j/WSClient.git</connection>
+		<developerConnection>scm:git:https://github.com/simple4j/WSClient.git</developerConnection>
+		<url>https://github.com/simple4j/WSClient</url>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
