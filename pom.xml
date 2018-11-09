@@ -37,6 +37,9 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
+	<properties>
+		<project.scm.id>github</project.scm.id>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
