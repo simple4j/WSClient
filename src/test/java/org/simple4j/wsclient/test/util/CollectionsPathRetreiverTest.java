@@ -21,23 +21,23 @@ public class CollectionsPathRetreiverTest
 	public void testGetJSON()
 	{
 		Map randomSalesPersonMap = getRandomSalesPersonMap();
-		System.out.println(randomSalesPersonMap);
+		logger.info(randomSalesPersonMap);
 		CollectionsPathRetreiver cpr = new CollectionsPathRetreiver();
 		// TODO: verified manually but will have to switch to assertions.
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "salesPersonId"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "salesPersonId1"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[0]"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderDate"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderId"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[*]"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[*].orderItems"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS[LENGTH]"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS[0]"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS[1].productId"));
-		System.out.println(cpr.getNestedProperty(randomSalesPersonMap, "orders[LENGTH]"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "salesPersonId"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "salesPersonId1"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[0]"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderDate"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderId"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[*]"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[*].orderItems"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS[LENGTH]"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS[0]"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS[1].productId"));
+		logger.info(cpr.getNestedProperty(randomSalesPersonMap, "orders[LENGTH]"));
 	}
 
 	private static Map getRandomSalesPersonMap()

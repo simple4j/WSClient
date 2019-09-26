@@ -351,8 +351,8 @@ public class CollectionsPathRetreiver
 							}
 						} else
 						{
-							System.out.println("List element is not a Map but has remaining path to process:"
-									+ unescapePropertyPath(escapedRemainingPropertyPath));
+							logger.info("List element is not a Map but has remaining path to process:{}",
+									unescapePropertyPath(escapedRemainingPropertyPath));
 						}
 					}
 				} else
@@ -381,7 +381,7 @@ public class CollectionsPathRetreiver
 								ret.addAll(nestedVal);
 						} else
 						{
-							System.out.println(val + " not instance of Map. But continuing processing.");
+							logger.info("{} not instance of Map. But continuing processing.", val);
 						}
 					}
 				} else
@@ -444,8 +444,8 @@ public class CollectionsPathRetreiver
 							}
 						} else
 						{
-							System.out.println("key is not Map but has remaining path without index to process:"
-									+ unescapePropertyPath(escapedRemainingPropertyPath));
+							logger.info("key is not Map but has remaining path without index to process:{}",
+									unescapePropertyPath(escapedRemainingPropertyPath));
 						}
 					}
 				}

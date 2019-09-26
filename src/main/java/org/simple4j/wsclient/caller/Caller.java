@@ -128,6 +128,12 @@ public class Caller
 	 * Any non templated static request headers and its values.
 	 */
 	private Map<String, List<String>> staticHeaderValues = null;
+	
+	/**
+	 * This PreTransactionCallback will be called after the URL, headers and body are derived.
+	 * It can be used for custom logic like signing the request just before making the transaction.
+	 */
+	private PreTransactionCallback preTransactionCallback = null;
 
 	private CollectionsPathRetreiver collectionsPathRetreiver = null;
 
@@ -261,6 +267,16 @@ public class Caller
 		this.httpResponseObjectFieldName = httpResponseObjectFieldName;
 	}
 
+	public PreTransactionCallback getPreTransactionCallback()
+	{
+		return preTransactionCallback;
+	}
+
+	public void setPreTransactionCallback(PreTransactionCallback preTransactionCallback)
+	{
+		this.preTransactionCallback = preTransactionCallback;
+	}
+
 	public CollectionsPathRetreiver getCollectionsPathRetreiver()
 	{
 		if (collectionsPathRetreiver == null)
@@ -375,6 +391,12 @@ public class Caller
 
 	private HTTPWSResponse invokeHTTP(String serviceURL, String requestBody, Map<String, List<String>> requestHeaders)
 	{
+		if(this.getPreTransactionCallback()!= null)
+		{
+			serviceURL = this.getPreTransactionCallback().updateURL(this.getServiceMethod(), serviceURL, requestBody, requestHeaders);
+			requestBody = this.getPreTransactionCallback().updateBody(this.getServiceMethod(), serviceURL, requestBody, requestHeaders);
+			requestHeaders = this.getPreTransactionCallback().updateRequestHeader(this.getServiceMethod(), serviceURL, requestBody, requestHeaders);
+		}
 		HTTPWSResponse response = null;
 		if (this.getServiceMethod().equalsIgnoreCase("POST"))
 		{
