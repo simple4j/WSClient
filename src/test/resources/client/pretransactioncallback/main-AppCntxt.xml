@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	<import resource="post.xml" />
+
+	<bean id="httpWSClient" class="org.simple4j.wsclient.http.HTTPWSClient">
+		<property name="connectionTimeOutMillis" value="1000"></property>
+		<property name="maxConnectionsPerHost" value="2"></property>
+		<property name="numberOfRetries" value="2"></property>
+		<property name="serviceHostName" value="localhost"></property>
+		<property name="servicePortNumber" value="8080"></property>
+		<property name="serviceProtocol" value="http"></property>
+		<property name="socketTimeOutMillis" value="1000"></property>
+	</bean>
+
+	<bean id="freemarkerConfig" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean" >
+        <property name="templateLoaderPath" value ="classpath:/client/pretransactioncallback/templates"/>
+        <property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
+			<map>
+			<entry key="template_exception_handler" value="rethrow"></entry>
+<!-- 			<entry key="wrap_unchecked_exceptions" value="true"></entry> -->
+			</map>
+		</property>
+    </bean>
+    
+</beans>
