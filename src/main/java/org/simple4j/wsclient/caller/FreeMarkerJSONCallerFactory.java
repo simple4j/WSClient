@@ -1,5 +1,6 @@
 package org.simple4j.wsclient.caller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -12,12 +13,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.simple4j.wsclient.exception.SystemException;
 import org.simple4j.wsclient.formatter.IFormatter;
 import org.simple4j.wsclient.formatter.impl.FreemarkerFormatter;
 import org.simple4j.wsclient.http.HTTPWSClient;
 import org.simple4j.wsclient.parser.IParser;
-import org.simple4j.wsclient.parser.impl.JSONParser;
-import org.simple4j.wsclient.util.CollectionsPathRetreiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,24 +25,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
+import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.Version;
 
 public class FreeMarkerJSONCallerFactory
 {
 	private static Logger logger = LoggerFactory.getLogger(FreeMarkerJSONCallerFactory.class);
 	
-	private String jSONConfigFile = null;
+	private File jSONConfigFile = null;
 	private Caller caller = null;
 	private PreTransactionCallback preTransactionCallback = null;
 	private Map<String, IParser> responseBodyParsers;
 	private HTTPWSClient httpWSClient = null;
+	private Configuration freemarkerConfiguration = null;
 
-	public String getjSONConfigFile()
+	public File getJSONConfigFile()
 	{
+		if(jSONConfigFile == null || !jSONConfigFile.exists() | !jSONConfigFile.isFile())
+		{
+			throw new SystemException("FreeMarkerJSONCallerFactory.jSONConfigFile-invalid", "FreeMarkerJSONCallerFactory.jSONConfigFile is not configured properly:"+this.jSONConfigFile);
+		}
 		return jSONConfigFile;
 	}
 
-	public void setjSONConfigFile(String jSONConfigFile)
+	public void setJSONConfigFile(File jSONConfigFile)
 	{
 		this.jSONConfigFile = jSONConfigFile;
 	}
@@ -77,20 +83,26 @@ public class FreeMarkerJSONCallerFactory
 		this.httpWSClient = httpWSClient;
 	}
 
+	public Configuration getFreemarkerConfiguration()
+	{
+		return freemarkerConfiguration;
+	}
+
+	public void setFreemarkerConfiguration(Configuration freemarkerConfiguration)
+	{
+		this.freemarkerConfiguration = freemarkerConfiguration;
+	}
+
 	public Caller getCaller() throws IOException
 	{
 		if(this.caller != null)
 			return this.caller;
-		
-//		JSONParser jsonParser = new JSONParser();
-//		Map<String, ? extends Object> parseData = jsonParser.parseData(this.getFileContent(this.getjSONConfigFile()));
-		
+				
 		ObjectMapper jsonMapper = new ObjectMapper();
-		FreeMarkerJSONCallerFactoryConfiguration readValue = jsonMapper.readValue(this.getFileContent(this.getjSONConfigFile()), FreeMarkerJSONCallerFactoryConfiguration.class);
+		FreeMarkerJSONCallerFactoryConfiguration readValue = jsonMapper.readValue(this.getFileContent(this.getJSONConfigFile()), FreeMarkerJSONCallerFactoryConfiguration.class);
 		
-		CollectionsPathRetreiver cpr = new CollectionsPathRetreiver();
-		Version incompatibleImprovements = new Version(readValue.getFreemarkerVersion());
-		Configuration configuration = new Configuration(incompatibleImprovements );
+		Configuration configuration = this.getFreemarkerConfiguration(readValue);
+		
 		StringTemplateLoader stringTemplateLoader = new StringTemplateLoader();
 		stringTemplateLoader.putTemplate("request.urlPattern", readValue.getRequest().getUrlPattern());
 		stringTemplateLoader.putTemplate("request.body", readValue.getRequest().getBody());
@@ -104,15 +116,15 @@ public class FreeMarkerJSONCallerFactory
 			String key = "request.headers" + entry.getKey();
 			stringTemplateLoader.putTemplate(key, entry.getValue());
 			
-			if(!requestHeaderFormatters.containsKey(key))
+			if(!requestHeaderFormatters.containsKey(entry.getKey()))
 			{
-				requestHeaderFormatters.put(key, new ArrayList<IFormatter>());
+				requestHeaderFormatters.put(entry.getKey(), new ArrayList<IFormatter>());
 			}
 			FreemarkerFormatter freemarkerFormatter = new FreemarkerFormatter();
 			freemarkerFormatter.setConfiguration(configuration);
 			freemarkerFormatter.setOutputEncoding("UTF-8");
 			freemarkerFormatter.setTemplateName(key);
-			requestHeaderFormatters.get(key).add(freemarkerFormatter);
+			requestHeaderFormatters.get(entry.getKey()).add(freemarkerFormatter);
 		}
 		
 		configuration.setTemplateLoader(stringTemplateLoader);
@@ -161,10 +173,31 @@ public class FreeMarkerJSONCallerFactory
 		
 	}
 
-	private String getFileContent(String file) throws IOException
+	private Configuration getFreemarkerConfiguration(FreeMarkerJSONCallerFactoryConfiguration readValue)
+	{
+		if(this.getFreemarkerConfiguration() != null)
+		{
+			if(readValue.getFreemarkerVersion() != null)
+			{
+				logger.warn("Freemarker configuration is set in freemarkerConfiguration and also freemarkerVersion defined in jSONConfigFile:{}. Other calls using the CallerFactory may be impacted.", this.getJSONConfigFile());
+			}
+			if(readValue.getFreemarkerEncoding() != null)
+			{
+				logger.warn("Freemarker configuration is set in freemarkerConfiguration and also freemarkerEncoding defined in jSONConfigFile:{}. Other calls using the CallerFactory may be impacted.", this.getJSONConfigFile());
+			}
+		}
+		Version incompatibleImprovements = new Version(readValue.getFreemarkerVersion());
+		Configuration configuration = new Configuration(incompatibleImprovements );
+		configuration.setDefaultEncoding(readValue.getFreemarkerEncoding());
+		configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+		this.setFreemarkerConfiguration(configuration);
+		return this.getFreemarkerConfiguration();
+	}
+
+	private String getFileContent(File file) throws IOException
 	{
 	    StringBuilder contentBuilder = new StringBuilder();
-	    try (Stream<String> stream = Files.lines( Paths.get(file), StandardCharsets.UTF_8))
+	    try (Stream<String> stream = Files.lines( Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8))
 	    {
 	        stream.forEach(s -> contentBuilder.append(s).append("\n"));
 	    }

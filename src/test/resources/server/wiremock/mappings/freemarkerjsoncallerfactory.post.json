@@ -1,0 +1,14 @@
+{
+    "request": {
+        "method": "POST",
+        "urlPattern": "/simple4j/wsmock/freemarkerjsoncallerfactory/post/.*"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"responsevalue\":\"{{request.body}}\", \"reqheadr2\":\"{{request.headers.x-header2}}\", \"callbackkey\":\"{{request.query.callbackkey}}\"}",
+        "headers": {
+            "Content-Type": "application/JSON"
+        },
+        "transformers": ["response-template"]
+    }
+}

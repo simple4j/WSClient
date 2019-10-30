@@ -4,6 +4,7 @@ public class FreeMarkerJSONCallerFactoryConfiguration
 {
 	/*
 {
+	"freemarketEncoding":"UTF-8",
 `	"freemarkerVersion":"2.3.23",
     "request": {
 `        "method": "PUT",
@@ -25,9 +26,18 @@ public class FreeMarkerJSONCallerFactoryConfiguration
 
 	 */
 
+	private String freemarkerEncoding = null;
 	private String freemarkerVersion = null;
 	private Request request = null;
 	private Response response = null;
+	public String getFreemarkerEncoding()
+	{
+		return freemarkerEncoding;
+	}
+	public void setFreemarkerEncoding(String freemarkerEncoding)
+	{
+		this.freemarkerEncoding = freemarkerEncoding;
+	}
 	public String getFreemarkerVersion()
 	{
 		return freemarkerVersion;

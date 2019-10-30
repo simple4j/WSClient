@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	<bean id="postCallerFactory" class="org.simple4j.wsclient.caller.FreeMarkerJSONCallerFactory">
+		<property name="httpWSClient" ref="httpWSClient"></property>
+		<property name="jSONConfigFile" value="classpath:/client/freemarkerjsoncallerfactory/templates/config.json"></property>
+		<property name="responseBodyParsers">
+			<map>
+				<entry key="(200)|(204)" value-ref="successBodyParser"></entry>
+				<entry key="(404)|(403)" value-ref="failureBodyParser"></entry>
+			</map>
+		</property>
+		<property name="preTransactionCallback" ref="preTransactionCallback"></property>
+	</bean>
+
+	<bean id="preTransactionCallback" class="org.simple4j.wsclient.test.pretransactioncallback.PreTransactionCallbackTestImpl">
+	</bean>
+
+	<!-- {} -->
+	<bean id="successBodyParser" class="org.simple4j.wsclient.parser.impl.JSONParser">
+	</bean>
+
+	<!--
+	<errorResponse>
+		<errorId>ujd83jheusd83ujjsdi</errorId>
+		<errorType>VALIDATION_FAILURE</errorType>
+		<errorReasonCode>param1-empty</errorReasonCode>
+		<errorReasonCode>param2-maxlength</errorReasonCode>
+		<description>Some fields failed validation check</description>
+	</errorResponse>
+	 -->
+	<bean id="failureBodyParser" class="org.simple4j.wsclient.parser.impl.XMLParser">
+		<property name="listElementXpaths">
+			<list>
+				<value>errorReasonCode</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>
