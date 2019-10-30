@@ -1,30 +1,35 @@
 package org.simple4j.wsclient.caller;
 
+/**
+ * This is POJO representation of JSON structure in FreeMarkerJSONCallerFactory.jSONConfigFile
+ * The structure of JSON is
+ * 
+ * {
+ * 	"freemarketEncoding":"UTF-8",
+ * 	"freemarkerVersion":"2.3.23",
+ *     "request": {
+ *         "method": "PUT",
+ *         "urlPattern": "/simple4j/wsmock/httpmethods/put/.*",
+ *         "body": "{\"responsevalue\":\"{{request.body}}\", \"reqheadr2\":\"{{request.headers.x-header2}}\"}",
+ *         "staticHeaders": {
+ *             "Content-Type": "application/JSON"
+ *         },
+ *         "headers": {
+ *             "aaa": "<freemarker template>"
+ *         }
+ *     },
+ *     "response": {
+ *         "responseBodyToCustomFieldMapping": {
+ *             "asdf": "...."
+ *         }
+ *     }
+ * }
+ * 
+ * @author jsrinivas108
+ *
+ */
 public class FreeMarkerJSONCallerFactoryConfiguration
 {
-	/*
-{
-	"freemarketEncoding":"UTF-8",
-`	"freemarkerVersion":"2.3.23",
-    "request": {
-`        "method": "PUT",
-`        "urlPattern": "/simple4j/wsmock/httpmethods/put/.*",
-`        "body": "{\"responsevalue\":\"{{request.body}}\", \"reqheadr2\":\"{{request.headers.x-header2}}\"}",
-`        "staticHeaders": {
-            "Content-Type": "application/JSON"
-        },
-`        "headers": {
-            "aaa": "<freemarker template>"
-        }
-    },
-    "response": {
-`        "responseBodyToCustomFieldMapping": {
-            "asdf": "...."
-        }
-    }
-}
-
-	 */
 
 	private String freemarkerEncoding = null;
 	private String freemarkerVersion = null;

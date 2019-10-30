@@ -17,7 +17,7 @@ public interface PreTransactionCallback
 	 * @param serviceURL
 	 * @param requestBody
 	 * @param requestHeaders
-	 * @return
+	 * @return updated URL including query parameters
 	 */
 	public String updateURL(String method, String serviceURL, String requestBody,
 			Map<String, List<String>> requestHeaders);
@@ -28,7 +28,7 @@ public interface PreTransactionCallback
 	 * @param serviceURL
 	 * @param requestBody
 	 * @param requestHeaders
-	 * @return
+	 * @return updated body text
 	 */
 	public String updateBody(String method, String serviceURL, String requestBody,
 			Map<String, List<String>> requestHeaders);
@@ -39,7 +39,7 @@ public interface PreTransactionCallback
 	 * @param serviceURL
 	 * @param requestBody
 	 * @param requestHeaders
-	 * @return
+	 * @return updated request headers
 	 */
 	public Map<String, List<String>> updateRequestHeader(String method, String serviceURL, String requestBody,
 			Map<String, List<String>> requestHeaders);

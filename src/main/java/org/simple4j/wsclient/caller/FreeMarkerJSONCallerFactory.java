@@ -28,16 +28,46 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.Version;
 
+/**
+ * This is a convenience class to load the caller configuration using FreeMarker template for request url, header and body.
+ * The configuration will be in JSON format. This will suffice for most of the usecases.
+ * Sample code is available in org.simple4j.wsclient.test.freemarkerjsoncallerfactory.CallerFactoryTest and its associated configurations
+ * 
+ * @author jsrinivas108
+ *
+ */
 public class FreeMarkerJSONCallerFactory
 {
 	private static Logger logger = LoggerFactory.getLogger(FreeMarkerJSONCallerFactory.class);
-	
+
+	/**
+	 * JSON file location which contains the configuration for the creation of org.simple4j.wsclient.caller.Caller
+	 * The structure of JSON follows FreeMarkerJSONCallerFactoryConfiguration
+	 */
 	private File jSONConfigFile = null;
-	private Caller caller = null;
+	
+	/**
+	 * This is an optional configuration and will be set as preTransactionCallback in the created Caller instance 
+	 */
 	private PreTransactionCallback preTransactionCallback = null;
+	
+	/**
+	 * This will be set as responseBodyParsers in the created Caller instance
+	 */
 	private Map<String, IParser> responseBodyParsers;
+	
+	/**
+	 * This will be set as responseBodyParsers in the created Caller instance
+	 */
 	private HTTPWSClient httpWSClient = null;
+	
+	/**
+	 * This is an optional configuration to set any finer settings to FreeMarker.
+	 * If not set, will get the configuration from jSONConfigFile using fields freemarkerVersion and freemarkerEncoding.
+	 * If FreeMarker related configurations are present in jSONConfigFile and this configuration is also set, the settings in the jSONConfigFile will take precedence.
+	 */
 	private Configuration freemarkerConfiguration = null;
+	private Caller caller = null;
 
 	public File getJSONConfigFile()
 	{

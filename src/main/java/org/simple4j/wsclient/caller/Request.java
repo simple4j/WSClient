@@ -2,6 +2,12 @@ package org.simple4j.wsclient.caller;
 
 import java.util.Map;
 
+/**
+ * @see FreeMarkerJSONCallerFactoryConfiguration
+ * 
+ * @author jsrinivas108
+ *
+ */
 public class Request
 {
 /*
