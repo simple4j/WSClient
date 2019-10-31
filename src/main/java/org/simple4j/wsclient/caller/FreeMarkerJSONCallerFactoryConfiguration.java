@@ -15,7 +15,7 @@ package org.simple4j.wsclient.caller;
  *             "Content-Type": "application/JSON"
  *         },
  *         "headers": {
- *             "aaa": "<freemarker template>"
+ *             "aaa": "&lt;freemarker template&gt;"
  *         }
  *     },
  *     "response": {

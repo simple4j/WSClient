@@ -13,10 +13,10 @@ public interface PreTransactionCallback
 	
 	/**
 	 * This method will be invoked to update the request URL before sending the request
-	 * @param method
-	 * @param serviceURL
-	 * @param requestBody
-	 * @param requestHeaders
+	 * @param method - HTTP method
+	 * @param serviceURL - service URL
+	 * @param requestBody - request body
+	 * @param requestHeaders - request headers
 	 * @return updated URL including query parameters
 	 */
 	public String updateURL(String method, String serviceURL, String requestBody,
@@ -24,10 +24,10 @@ public interface PreTransactionCallback
 
 	/**
 	 * This method will be invoked to update the request body before sending the request
-	 * @param method
-	 * @param serviceURL
-	 * @param requestBody
-	 * @param requestHeaders
+	 * @param method - HTTP method
+	 * @param serviceURL - service URL
+	 * @param requestBody - request body
+	 * @param requestHeaders - request headers
 	 * @return updated body text
 	 */
 	public String updateBody(String method, String serviceURL, String requestBody,
@@ -35,10 +35,10 @@ public interface PreTransactionCallback
 
 	/**
 	 * This method will be invoked to update the request headers before sending the request
-	 * @param method
-	 * @param serviceURL
-	 * @param requestBody
-	 * @param requestHeaders
+	 * @param method - HTTP method
+	 * @param serviceURL - service URL
+	 * @param requestBody - request body
+	 * @param requestHeaders - request headers
 	 * @return updated request headers
 	 */
 	public Map<String, List<String>> updateRequestHeader(String method, String serviceURL, String requestBody,
