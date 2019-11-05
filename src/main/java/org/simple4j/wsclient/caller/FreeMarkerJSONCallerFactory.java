@@ -43,8 +43,16 @@ public class FreeMarkerJSONCallerFactory
 	/**
 	 * JSON file location which contains the configuration for the creation of org.simple4j.wsclient.caller.Caller
 	 * The structure of JSON follows FreeMarkerJSONCallerFactoryConfiguration
+	 * If both jSONConfigFile and jSONConfig are configured, jSONConfig will take precedence
 	 */
 	private File jSONConfigFile = null;
+	
+	/**
+	 * JSON configuration for the creation of org.simple4j.wsclient.caller.Caller
+	 * The structure of JSON follows FreeMarkerJSONCallerFactoryConfiguration
+	 * If both jSONConfigFile and jSONConfig are configured, jSONConfig will take precedence
+	 */
+	private String jSONConfig = null;
 	
 	/**
 	 * This is an optional configuration and will be set as preTransactionCallback in the created Caller instance 
@@ -63,8 +71,8 @@ public class FreeMarkerJSONCallerFactory
 	
 	/**
 	 * This is an optional configuration to set any finer settings to FreeMarker.
-	 * If not set, will get the configuration from jSONConfigFile using fields freemarkerVersion and freemarkerEncoding.
-	 * If FreeMarker related configurations are present in jSONConfigFile and this configuration is also set, the settings in the jSONConfigFile will take precedence.
+	 * If not set, will get the configuration from jSONConfigFile or jSONConfig using fields freemarkerVersion and freemarkerEncoding.
+	 * If FreeMarker related configurations are present in jSONConfigFile or jSONConfig and this configuration is also set, the settings in the jSONConfigFile or jSONConfig will take precedence.
 	 */
 	private Configuration freemarkerConfiguration = null;
 	private Caller caller = null;
@@ -73,7 +81,10 @@ public class FreeMarkerJSONCallerFactory
 	{
 		if(jSONConfigFile == null || !jSONConfigFile.exists() | !jSONConfigFile.isFile())
 		{
-			throw new SystemException("FreeMarkerJSONCallerFactory.jSONConfigFile-invalid", "FreeMarkerJSONCallerFactory.jSONConfigFile is not configured properly:"+this.jSONConfigFile);
+			if(this.jSONConfig == null || this.jSONConfig.trim().length()==0)
+			{
+				throw new SystemException("FreeMarkerJSONCallerFactory.jSONConfigFile-invalid", "FreeMarkerJSONCallerFactory.jSONConfigFile is not configured properly:"+this.jSONConfigFile);
+			}
 		}
 		return jSONConfigFile;
 	}
@@ -81,6 +92,16 @@ public class FreeMarkerJSONCallerFactory
 	public void setJSONConfigFile(File jSONConfigFile)
 	{
 		this.jSONConfigFile = jSONConfigFile;
+	}
+
+	public String getjSONConfig()
+	{
+		return jSONConfig;
+	}
+
+	public void setjSONConfig(String jSONConfig)
+	{
+		this.jSONConfig = jSONConfig;
 	}
 
 	public PreTransactionCallback getPreTransactionCallback()
@@ -129,7 +150,17 @@ public class FreeMarkerJSONCallerFactory
 			return this.caller;
 				
 		ObjectMapper jsonMapper = new ObjectMapper();
-		FreeMarkerJSONCallerFactoryConfiguration readValue = jsonMapper.readValue(this.getFileContent(this.getJSONConfigFile()), FreeMarkerJSONCallerFactoryConfiguration.class);
+		
+		FreeMarkerJSONCallerFactoryConfiguration readValue = null;
+		if(this.getjSONConfig() != null && this.getjSONConfig().trim().length() > 0)
+		{
+			readValue = jsonMapper.readValue(this.getjSONConfig(), FreeMarkerJSONCallerFactoryConfiguration.class);
+		}
+		else
+		{
+			readValue = jsonMapper.readValue(this.getFileContent(this.getJSONConfigFile()), FreeMarkerJSONCallerFactoryConfiguration.class);
+		}
+		
 		
 		Configuration configuration = this.getFreemarkerConfiguration(readValue);
 		
