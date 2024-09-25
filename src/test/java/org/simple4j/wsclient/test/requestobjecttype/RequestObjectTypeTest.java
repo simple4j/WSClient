@@ -47,7 +47,7 @@ public class RequestObjectTypeTest
 		logger.info("", System.getProperties());
 
 		wireMockServer = new WireMockServer(WireMockConfiguration.options().port(8080)
-				.usingFilesUnderClasspath("server/wiremock").extensions(new ResponseTemplateTransformer(true)));
+				.usingFilesUnderClasspath("server/wiremock"));
 		wireMockServer.start();
 
 		logger.info("wiremock started");

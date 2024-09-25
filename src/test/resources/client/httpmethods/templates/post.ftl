@@ -1,1 +1,1 @@
-"bodyparam1":"bp1${testProperty2}"
+bodyparam1:bp1${testProperty2}

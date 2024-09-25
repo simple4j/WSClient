@@ -28,6 +28,7 @@ public class JSONParser implements IParser
 			return jsonMapper.readValue(arg, Map.class);
 		} catch (IOException e)
 		{
+			logger.error("Error while parsing JSON : >{}<", arg);
 			throw new SystemException("JSON_PARSE_FAILED", e);
 		}
 	}

@@ -99,7 +99,7 @@ public class HTTPWSClient
 
 	private String trustStoreType = "jks";
 
-	private String[] supportedProtocols = new String[] { "TLSv1" };
+	private String[] supportedProtocols = new String[] { "TLSv1.2" };
 
 	private String[] supportedCipherSuites = null;
 

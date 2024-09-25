@@ -50,7 +50,7 @@ public class ConnectionConfigTest
 		wireMockServer = new WireMockServer(
 				WireMockConfiguration.options().port(8080).httpsPort(8443).keystorePassword("passwords")
 						.keystorePath(serverKeystorePath).trustStorePassword("passwordt").trustStorePath(trustStorePath)
-						.usingFilesUnderClasspath("server/wiremock").extensions(new ResponseTemplateTransformer(true)));
+						.usingFilesUnderClasspath("server/wiremock").keyManagerPassword(null));
 		wireMockServer.start();
 
 		logger.info("wiremock started");
