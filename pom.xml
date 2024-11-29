@@ -4,7 +4,7 @@
 	<groupId>org.simple4j</groupId>
 	<artifactId>WSClient</artifactId>
 	<packaging>jar</packaging>
-	<version>24.09.19.3-SNAPSHOT</version>
+	<version>24.11.28.0-SNAPSHOT</version>
 	<name>WSClient</name>
 	<url>https://github.com/simple4j/WSClient</url>
 	<licenses>
