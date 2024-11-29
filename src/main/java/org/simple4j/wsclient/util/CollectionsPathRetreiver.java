@@ -310,7 +310,10 @@ public class CollectionsPathRetreiver
 			escapedPropertyPathSegmentBase = escapedPropertyPathSegment.substring(0, indexOfSqrBracketOpen);
 
 			// Since its an indexted property, it should be a List
-			List property = (List) getProperty(target, escapedPropertyPathSegmentBase);
+			Object temp = getProperty(target, escapedPropertyPathSegmentBase);
+			if(temp != null && !(temp instanceof List))
+				throw new RuntimeException("Property "+escapedPropertyPathSegmentBase+" in "+ target+ "is not a List. The property object type is "+temp.getClass());
+			List property = (List) temp;
 			if (property == null)
 			{
 				if (escapedPropertyPathSegmentBase.equals(this.getKeysPropertyName()))
@@ -401,7 +404,8 @@ public class CollectionsPathRetreiver
 				} else
 				{
 					// more property path segments are there to process, add it to the return List
-					Object property = getProperty(target, escapedPropertyPathSegmentBase);
+					Object temp2 = getProperty(target, escapedPropertyPathSegmentBase);
+					Object property = temp2;
 					if (property != null)
 					{
 						if (property instanceof List)
@@ -456,7 +460,13 @@ public class CollectionsPathRetreiver
 		}
 		// more property path segments are there to process, so it must be a Map.
 		// Proceed to next property path segment
-		Map property = (Map) getProperty(target, escapedPropertyPathSegmentBase);
+		
+		Object temp = getProperty(target, escapedPropertyPathSegmentBase);
+		if(temp != null && !(temp instanceof Map))
+		{
+			throw new RuntimeException("Property "+escapedPropertyPathSegmentBase+" in "+ target+ "is not a Map. The property object type is "+ temp.getClass());
+		}
+		Map property = (Map) temp;
 		if (property != null)
 		{
 			List val = getNestedProperty(property, escapedRemainingPropertyPath);
@@ -522,7 +532,7 @@ public class CollectionsPathRetreiver
 				if (val instanceof List)
 					return getMultilevelIndexedProperty((List) val, indexPaths);
 				else
-					throw new RuntimeException("Nested indexed property does not contain List");
+					throw new RuntimeException("Nested indexed property does not contain List. The object type is " + (val != null ? val.getClass():null) );
 			} else
 			{
 				List ret = new ArrayList();
@@ -537,13 +547,14 @@ public class CollectionsPathRetreiver
 				List ret = new ArrayList();
 				for (int i = 0; i < target.size(); i++)
 				{
-					if (target.get(i) instanceof List)
+					Object temp = target.get(i);
+					if (temp instanceof List)
 					{
-						List val = getMultilevelIndexedProperty((List) target.get(i), indexPaths);
+						List val = getMultilevelIndexedProperty((List) temp, indexPaths);
 						if (val != null)
 							ret.addAll(val);
 					} else
-						throw new RuntimeException("Nested indexed property does not contain List");
+						throw new RuntimeException("Nested indexed property does not contain List. The object type is " +(temp != null ? temp.getClass():null) );
 				}
 				return ret;
 			} else
