@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  *      to parse the ResponseBody to java collections object tree
  * @author jsrinivas108
  */
-public class Caller
+public class Caller implements ICaller
 {
 
 	private static Logger logger = LoggerFactory.getLogger(Caller.class);
@@ -383,8 +383,14 @@ public class Caller
 			// returning data to the requestor
 			return ret;
 
-		} catch (Exception t)
+		}
+		catch (SystemException se )
 		{
+			throw se;
+		}
+		catch (Exception t)
+		{
+			logger.warn("", t);
 			throw new SystemException("", "", t);
 		}
 	}

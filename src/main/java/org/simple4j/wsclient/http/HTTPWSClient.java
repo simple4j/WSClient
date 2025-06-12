@@ -475,7 +475,12 @@ public class HTTPWSClient
 				}
 			};
 			return httpClient.execute(httpRequest, responseHandler);
-		} catch (Exception e)
+		}
+		catch (SystemException se)
+		{
+			throw se;
+		}
+		catch (Exception e)
 		{
 			throw new SystemException("", "Error while calling service: " + httpRequest, e);
 		} finally

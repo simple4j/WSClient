@@ -29,13 +29,13 @@ public class SystemException extends RuntimeException
 
 	public SystemException(String reasonCode, String message, Throwable rootCause)
 	{
-		super(message);
+		super(message, rootCause);
 		delegate = ThrowableBeanFactory.getThrowableBean(reasonCode, rootCause);
 	}
 
 	public SystemException(String reasonCode, Throwable rootCause)
 	{
-		super();
+		super(reasonCode, rootCause);
 		delegate = ThrowableBeanFactory.getThrowableBean(reasonCode, rootCause);
 	}
 

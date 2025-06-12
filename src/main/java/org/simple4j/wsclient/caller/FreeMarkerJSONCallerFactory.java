@@ -155,7 +155,7 @@ public class FreeMarkerJSONCallerFactory implements CallerFactory
 		this.freemarkerConfiguration = freemarkerConfiguration;
 	}
 
-	public Caller getCaller()
+	public ICaller getCaller()
 	{
 		if (this.caller != null)
 			return this.caller;

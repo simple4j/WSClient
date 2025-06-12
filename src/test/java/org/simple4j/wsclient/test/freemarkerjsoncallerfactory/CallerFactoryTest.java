@@ -10,8 +10,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.simple4j.wsclient.caller.Caller;
 import org.simple4j.wsclient.caller.FreeMarkerJSONCallerFactory;
+import org.simple4j.wsclient.caller.ICaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -19,7 +19,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 
 public class CallerFactoryTest
 {
@@ -28,7 +27,7 @@ public class CallerFactoryTest
 
 	private static WireMockServer wireMockServer = null;
 
-	private static Caller postCaller = null;
+	private static ICaller postCaller = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
