@@ -1,5 +1,7 @@
-package org.simple4j.wsclient.caller.factory;
+package org.simple4j.wsclient.caller;
 
+import org.simple4j.wsclient.caller.factory.FreeMarkerCallerFactory;
+import org.simple4j.wsclient.caller.factory.JSONConfigParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

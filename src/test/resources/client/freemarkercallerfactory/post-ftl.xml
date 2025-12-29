@@ -10,7 +10,7 @@
                         http://www.springframework.org/schema/util
 						http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
-	<bean id="postCallerFactory" class="org.simple4j.wsclient.caller.factory.FreeMarkerJSONCallerFactory">
+	<bean id="postCallerFactory" class="org.simple4j.wsclient.caller.FreeMarkerJSONCallerFactory">
 		<property name="httpWSClient" ref="httpWSClient"></property>
 		<property name="configFile" value="classpath:/client/freemarkercallerfactory/templates/config.json"></property>
 		<property name="responseBodyParsers">
