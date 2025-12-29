@@ -1,9 +1,9 @@
-package org.simple4j.wsclient.caller;
+package org.simple4j.wsclient.caller.factory;
 
 import java.util.Map;
 
 /**
- * @see FreeMarkerJSONCallerFactoryConfiguration
+ * @see FreeMarkerCallerFactoryConfiguration
  * 
  * @author jsrinivas108
  *

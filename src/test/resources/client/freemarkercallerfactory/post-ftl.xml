@@ -10,9 +10,35 @@
                         http://www.springframework.org/schema/util
 						http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
-	<bean id="postCallerFactory" class="org.simple4j.wsclient.caller.FreeMarkerJSONCallerFactory">
+	<bean id="postCallerFactory" class="org.simple4j.wsclient.caller.factory.FreeMarkerJSONCallerFactory">
 		<property name="httpWSClient" ref="httpWSClient"></property>
-		<property name="jSONConfigFile" value="classpath:/client/freemarkerjsoncallerfactory/templates/config.json"></property>
+		<property name="configFile" value="classpath:/client/freemarkercallerfactory/templates/config.json"></property>
+		<property name="responseBodyParsers">
+			<map>
+				<entry key="(200)|(204)" value-ref="successBodyParser"></entry>
+				<entry key="(404)|(403)" value-ref="failureBodyParser"></entry>
+			</map>
+		</property>
+		<property name="preTransactionCallback" ref="preTransactionCallback"></property>
+	</bean>
+
+	<bean id="postCallerXMLFactory" class="org.simple4j.wsclient.caller.factory.FreeMarkerCallerFactory">
+		<property name="httpWSClient" ref="httpWSClient"></property>
+		<property name="configFile" value="classpath:/client/freemarkercallerfactory/templates/config.xml"></property>
+		<property name="configParser" ref="xmlConfigParser"></property>
+		<property name="responseBodyParsers">
+			<map>
+				<entry key="(200)|(204)" value-ref="successBodyParser"></entry>
+				<entry key="(404)|(403)" value-ref="failureBodyParser"></entry>
+			</map>
+		</property>
+		<property name="preTransactionCallback" ref="preTransactionCallback"></property>
+	</bean>
+
+	<bean id="postCallerclasspathBodyFileXMLFactory" class="org.simple4j.wsclient.caller.factory.FreeMarkerCallerFactory">
+		<property name="httpWSClient" ref="httpWSClient"></property>
+		<property name="configFile" value="classpath:/client/freemarkercallerfactory/templates/config.xml"></property>
+		<property name="configParser" ref="xmlConfigParser"></property>
 		<property name="responseBodyParsers">
 			<map>
 				<entry key="(200)|(204)" value-ref="successBodyParser"></entry>
@@ -25,8 +51,10 @@
 	<bean id="preTransactionCallback" class="org.simple4j.wsclient.test.pretransactioncallback.PreTransactionCallbackTestImpl">
 	</bean>
 
-	<!-- {} -->
 	<bean id="successBodyParser" class="org.simple4j.wsclient.parser.impl.JSONParser">
+	</bean>
+
+	<bean id="xmlConfigParser" class="org.simple4j.wsclient.caller.factory.XMLConfigParser">
 	</bean>
 
 	<!--

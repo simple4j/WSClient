@@ -1,0 +1,22 @@
+<FreeMarkerCallerFactoryConfiguration>
+	<freemarkerEncoding>UTF-8</freemarkerEncoding>
+	<freemarkerVersion>2.3.23</freemarkerVersion>
+	<request>
+		<method>POST</method>
+		<urlPattern>/simple4j/wsmock/freemarkerjsoncallerfactory/post/${testProperty1}</urlPattern>
+		<body>bodyparam1:bp1${testProperty2}</body>
+		<classpathBodyFile/>
+		<staticHeaders>
+			<Content-Type>application/JSON</Content-Type>
+		</staticHeaders>
+		<headers>
+			<x-header1>${testProperty1}</x-header1>
+			<x-header2>${testProperty2}</x-header2>
+		</headers>
+	</request>
+	<response>
+		<responseBodyToCustomFieldMapping>
+			<responsevalue1>responsevalue</responsevalue1>
+		</responseBodyToCustomFieldMapping>
+	</response>
+</FreeMarkerCallerFactoryConfiguration>

@@ -1,9 +1,9 @@
-package org.simple4j.wsclient.caller;
+package org.simple4j.wsclient.caller.factory;
 
 import java.util.Map;
 
 /**
- * @see FreeMarkerJSONCallerFactoryConfiguration
+ * @see FreeMarkerCallerFactoryConfiguration
  * 
  * @author jsrinivas108
  *
@@ -26,6 +26,7 @@ public class Request
 	private String method = null;
 	private String urlPattern = null;
 	private String body = null;
+	private String classpathBodyFile = null;
 	private Map<String, String> staticHeaders = null;
 	private Map<String, String> headers = null;
 	public String getMethod()
@@ -51,6 +52,14 @@ public class Request
 	public void setBody(String body)
 	{
 		this.body = body;
+	}
+	public String getClasspathBodyFile()
+	{
+		return classpathBodyFile;
+	}
+	public void setClasspathBodyFile(String classpathBodyFile)
+	{
+		this.classpathBodyFile = classpathBodyFile;
 	}
 	public Map<String, String> getStaticHeaders()
 	{

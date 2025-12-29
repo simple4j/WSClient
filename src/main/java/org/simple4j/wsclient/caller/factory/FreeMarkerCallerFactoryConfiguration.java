@@ -1,4 +1,4 @@
-package org.simple4j.wsclient.caller;
+package org.simple4j.wsclient.caller.factory;
 
 /**
  * This is POJO representation of JSON structure in FreeMarkerJSONCallerFactory.jSONConfigFile
@@ -28,7 +28,7 @@ package org.simple4j.wsclient.caller;
  * @author jsrinivas108
  *
  */
-public class FreeMarkerJSONCallerFactoryConfiguration
+public class FreeMarkerCallerFactoryConfiguration
 {
 
 	private String freemarkerEncoding = null;
