@@ -2,6 +2,7 @@ package org.simple4j.wsclient.caller.factory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -203,9 +204,17 @@ public class FreeMarkerCallerFactory implements CallerFactory
 		stringTemplateLoader.putTemplate(REQUEST_URL_PATTERN, readValue.getRequest().getUrlPattern());
 		if(readValue.getRequest().getClasspathBodyFile() != null && readValue.getRequest().getClasspathBodyFile().trim().length() > 0)
 		{
-			Path bodyFile = Path.of(this.getClass().getResource(readValue.getRequest().getClasspathBodyFile()).getPath());
+			URL resource = this.getClass().getResource(readValue.getRequest().getClasspathBodyFile());
+			if(resource == null)
+			{
+				logger.info("Direct class resource loading failed for {}", readValue.getRequest().getClasspathBodyFile());
+				resource = this.getClass().getClassLoader().getResource(readValue.getRequest().getClasspathBodyFile());
+				logger.info("ClassLoader resource loading done {}", resource);
+			}
+			Path bodyFile = null;
 			try
 			{
+				bodyFile = Path.of(new File(resource.getPath()).getCanonicalPath());
 				stringTemplateLoader.putTemplate(REQUEST_BODY, Files.readString(bodyFile));
 			} catch (IOException e)
 			{
