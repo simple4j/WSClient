@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.junit.Test;
+import org.simple4j.wsclient.exception.SystemException;
 import org.simple4j.wsclient.util.CollectionsPathRetreiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,82 @@ public class CollectionsPathRetreiverTest
 		logger.info("{}",cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS[0]"));
 		logger.info("{}",cpr.getNestedProperty(randomSalesPersonMap, "orders[0].orderItems.KEYS[1].productId"));
 		logger.info("{}",cpr.getNestedProperty(randomSalesPersonMap, "orders[LENGTH]"));
+
+		logger.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+		randomSalesPersonMap = getRandomSalesPersonMap();
+		
+		logger.info("Starting value {}",randomSalesPersonMap);
+		
+		String removalPath = "orders[0].orderItems.KEYS[1].productDescription";
+		
+		this.delete(randomSalesPersonMap, removalPath);
+		logger.info("After removing productDescription {}",randomSalesPersonMap);
+		
+		removalPath = "orders[1]";
+		this.delete(randomSalesPersonMap, removalPath);
+		logger.info("After removing second order {}",randomSalesPersonMap);
+		
+		removalPath = "orders[*]";
+		this.delete(randomSalesPersonMap, removalPath);
+		logger.info("After removing all orders {}",randomSalesPersonMap);
+		
+	}
+
+	private void delete(Map randomSalesPersonMap, String removalPath)
+	{
+		CollectionsPathRetreiver cpr = new CollectionsPathRetreiver();
+		if(removalPath.endsWith("]"))
+		{
+			int lastIndexOfBeginSquarBracket = removalPath.lastIndexOf("[");
+			String parentPath = removalPath.substring(0, lastIndexOfBeginSquarBracket);
+			String removalIndexStr = removalPath.substring(lastIndexOfBeginSquarBracket+1, removalPath.length()-1);
+			logger.info("{},{}", parentPath, removalIndexStr);
+			Integer removalIndex = -1;
+			if(!removalIndexStr.equals("*"))
+			{
+				try
+				{
+					removalIndex = Integer.parseInt(removalIndexStr);
+				}
+				catch(NumberFormatException e)
+				{
+					throw new SystemException("REMOVALINDEX-NOTANUMBER", e);
+				}
+			}
+			List parentLevelValues = cpr.getNestedProperty(randomSalesPersonMap, parentPath);
+			logger.info("parentLevelValues: {}", parentLevelValues);
+
+			if(removalIndex >=0 )
+			{
+				parentLevelValues.remove(removalIndex);
+			}
+			else
+			{
+				parentLevelValues.clear();
+				for(int i=0 ; i < parentLevelValues.size() ; i++)
+				{
+					logger.info("parentLevelValues.get(i): {}", parentLevelValues.get(i));
+				}
+			}
+		}
+		else
+		{
+			int lastIndexOfDot = removalPath.lastIndexOf(".");
+			String parentPath = removalPath.substring(0, lastIndexOfDot);
+			String removalPropertyName = removalPath.substring(lastIndexOfDot+1);
+			List parentLevelValues = cpr.getNestedProperty(randomSalesPersonMap, parentPath);
+			for(int i=0 ; i < parentLevelValues.size() ; i++)
+			{
+				if(parentLevelValues.get(i) instanceof Map)
+				{
+					((Map)parentLevelValues.get(i)).remove(removalPropertyName);
+				}
+				else
+					throw new SystemException("PARENTVALUE-NOTAMAP", "Parent level value is not a Map object");
+			}
+		}
+		
 	}
 
 	private static Map getRandomSalesPersonMap()

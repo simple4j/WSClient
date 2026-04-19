@@ -89,8 +89,8 @@ public class VelocityFormatter implements IFormatter
 			velocityEngine = new VelocityEngine();
 			velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 			velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-			velocityEngine.setProperty(RuntimeConstants.INPUT_ENCODING, this.getEncoding());
-			velocityEngine.setProperty(RuntimeConstants.OUTPUT_ENCODING, this.getEncoding());
+			velocityEngine.setProperty("input.encoding", this.getEncoding());
+			velocityEngine.setProperty("output.encoding", this.getEncoding());
 			velocityEngine.init();
 		}
 		return velocityEngine;
